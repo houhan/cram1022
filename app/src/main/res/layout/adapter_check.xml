@@ -7,16 +7,15 @@
     <TextView
         android:text="TextView"
         android:layout_width="wrap_content"
-        android:layout_height="70dp"
+        android:layout_height="43dp"
         android:id="@+id/name"
-        android:layout_weight="0.66"
         android:textSize="24sp"
-        android:padding="5dp" />
+        android:layout_weight="0.17" />
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/checkBox2"
-        android:layout_weight="1" />
+        android:layout_weight="0.53" />
 
 </LinearLayout>

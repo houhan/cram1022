@@ -66,7 +66,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(HomeActivity.this, attendanceActivity.class);
+                intent.setClass(HomeActivity.this, CheckActivity.class);
                 HomeActivity.this.startActivity(intent);
             }
         });
