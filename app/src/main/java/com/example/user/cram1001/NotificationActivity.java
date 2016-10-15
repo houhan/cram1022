@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class GcmActivity extends AppCompatActivity {
+public class NotificationActivity extends AppCompatActivity {
 
 
     private Button btnSend;
@@ -65,10 +65,10 @@ public class GcmActivity extends AppCompatActivity {
 
             // -- 新的寫法
             NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE );
-            Notification.Builder builder = new Notification.Builder(GcmActivity.this );
+            Notification.Builder builder = new Notification.Builder(NotificationActivity.this );
             PendingIntent contentIndent = PendingIntent.getActivity(
-                    GcmActivity. this, 0, new Intent(GcmActivity.this,
-                            GcmActivity. class),
+                    NotificationActivity. this, 0, new Intent(NotificationActivity.this,
+                            NotificationActivity. class),
                     PendingIntent. FLAG_UPDATE_CURRENT);
             builder.setContentIntent(contentIndent)
                     .setSmallIcon(R.drawable. logo2)

@@ -50,17 +50,18 @@ public class HomeActivity extends AppCompatActivity {
                 HomeActivity.this.startActivity(intent);
             }
         });
+*/
 
-/*
         Button button4 = (Button) findViewById(R.id.schedule);//取得按鈕
         button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(HomeActivity.this, ScheduleActivity.class);
+                intent.setClass(HomeActivity.this, AddBillboardActivity.class);
                 HomeActivity.this.startActivity(intent);
             }
-        });*/
+        });
+
         Button button5 = (Button) findViewById(R.id.attendance);//取得按鈕
         button5.setOnClickListener(new View.OnClickListener() {
             @Override
