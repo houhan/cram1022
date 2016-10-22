@@ -1,27 +1,56 @@
 package com.example.user.cram1001;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.example.user.cram1001.volleymgr.ContentCheck;
+import com.example.user.cram1001.volleymgr.NetworkManager;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class BeaconActivity extends AppCompatActivity {
     private BluetoothAdapter mBluetoothAdapter; //宣告一個要放入藍芽資訊的堆疊
 
-    private TextView beaconn;
+    private CheckBox mCheckBox,mCheckBox1;
+    private TextView beaconn,beacon1;
+
+    private ArrayList<ContentCheck> contentCheck = new ArrayList<ContentCheck>();
+    private ListView listView;
+    private MyAdapterCheck myAdapter;
+    private Button checkbutton;
+    private TextView tv1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beacon);
+
+       mCheckBox = (CheckBox) findViewById(R.id.checkBox2);
+        mCheckBox1 = (CheckBox) findViewById(R.id.checkBox7);
 
         BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE); //宣告藍芽資訊接收管理
         mBluetoothAdapter = bluetoothManager.getAdapter(); //將接收的資訊放入堆疊
@@ -32,7 +61,87 @@ public class BeaconActivity extends AppCompatActivity {
         }
         mBluetoothAdapter.startLeScan(mLeScanCallback); //開始接收藍芽資訊
 
+        /*
+        //顯示學生姓名
+        StringRequest request = new StringRequest(Request.Method.GET, "https://cramschoollogin.herokuapp.com/api/querystudentname", mResponseListener, mErrorListener);
+        NetworkManager.getInstance(this).request(null, request);
+
+        setContentView(R.layout.list_check);
+        listView = (ListView) findViewById(R.id.listviewcheck);
+        myAdapter = new MyAdapterCheck(this, contentCheck);
+        listView.setAdapter(myAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                new AlertDialog.Builder(BeaconActivity.this)
+                        .setTitle("是否抵達")
+                        .setMessage("確定抵達 " + position + " item?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                tv1 = (TextView) findViewById(R.id.textcheck);
+                                tv1.setText("到");
+                                //myAdapter.removeItem(position);
+                                //myAdapter.notifyDataSetChanged();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .show();
+
+                return false;
+            }
+        });
+
     }
+
+    void fillData() {
+    }
+
+    private Response.Listener<String> mResponseListener = new Response.Listener<String>() {
+
+        @Override
+        public void onResponse(String string) {
+            Log.d("Response", string);
+            // contentTest=new ArrayList<ContentTest>();
+            try {
+
+                JSONArray ary = new JSONArray(string);
+                StringBuilder names = new StringBuilder();
+                for (int i = 0; i < ary.length(); i++) {
+                    JSONObject json = ary.getJSONObject(i);
+                    String name = json.getString("name");
+                    ContentCheck contentC = new ContentCheck(name);
+                    contentCheck.add(contentC);
+                }
+                myAdapter.notifyDataSetChanged();
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    };
+    private Response.ErrorListener mErrorListener = new Response.ErrorListener() {
+
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            Log.e("Error", error.toString());
+        }*/
+        //顯示學生姓名結束
+    };
+
+
 
     private Handler mHandler = new Handler() {
 
@@ -105,11 +214,30 @@ public class BeaconActivity extends AppCompatActivity {
                 Log.d("BLE","distance:"+calculateAccuracy(txPower,rssi));
                 mHandler.postDelayed(mDetectRunnable, 1000);
 
-                beaconn = (TextView) findViewById(R.id.beacon);
-                beaconn.setText(stringValue);
+
+                        mCheckBox.setChecked(false);
+                        mCheckBox1.setChecked(false);
+                    switch (minor) {
+                        case 10:
+                            beaconn = (TextView) findViewById(R.id.beacon);
+                            beaconn.setText(stringValue);
+                            //設定CheckBox勾選狀態
+                            mCheckBox.setChecked(true);
+                            break;
+                        case 13:
+                            beacon1 = (TextView) findViewById(R.id.textView13);
+                            beacon1.setText(stringValue);
+                            //設定CheckBox勾選狀態
+                            mCheckBox1.setChecked(true);
+                            break;
+                        default:
+                            break;
+                    }
+
             }
         }
     };
+
     static final char[] hexArray = "0123456789ABCDEF".toCharArray();
 
 /*
@@ -146,4 +274,6 @@ public class BeaconActivity extends AppCompatActivity {
             return accuracy;
         }
     }
+
+
 }

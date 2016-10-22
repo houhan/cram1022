@@ -12,13 +12,18 @@
         android:textSize="24sp"
         android:layout_weight="0.04" />
 
-
-
     <TextView
         android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textcheck"
+        android:id="@+id/checktext"
         android:layout_weight="0.04" />
+<!--
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkBox7"
+        android:layout_weight="0.04" />
+-->
 
 </LinearLayout>

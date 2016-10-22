@@ -18,6 +18,9 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
+    <!-- 地圖 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo2"
@@ -92,7 +95,8 @@
         <activity android:name=".attendanceActivity" />
         <activity android:name=".NotificationActivity" />
         <activity android:name=".BeaconActivity" />
-        <activity android:name=".CheckParentsActivity"></activity>
+        <activity android:name=".CheckParentsActivity" />
+        <activity android:name=".MapsActivity"></activity>
     </application>
 
 </manifest>

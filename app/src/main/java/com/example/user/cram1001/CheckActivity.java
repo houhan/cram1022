@@ -15,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -47,12 +48,8 @@ public class CheckActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check);
 
-
        /* Button checkbutton = (Button) findViewById(R.id.buttoncheck);
-
-
         checkbutton.setOnClickListener(new View.OnClickListener(){
-
             public void onClick(View v){
                 tv1.setText("HI");
                 /*
@@ -70,9 +67,7 @@ public class CheckActivity extends AppCompatActivity {
 
                 //切換Activity
                 startActivity(intent);
-
             }
-
         });*/
 
         StringRequest request = new StringRequest(Request.Method.GET, "https://cramschoollogin.herokuapp.com/api/querystudentname", mResponseListener, mErrorListener);
@@ -82,12 +77,15 @@ public class CheckActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listviewcheck);
         myAdapter = new MyAdapterCheck(this, contentCheck);
         listView.setAdapter(myAdapter);
+
+
+        /*
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
             }
-        });
+        });*/
+
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -98,10 +96,11 @@ public class CheckActivity extends AppCompatActivity {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                tv1 = (TextView) findViewById(R.id.textcheck);
+                                tv1 = (TextView) findViewById(R.id.checktext);
                                 tv1.setText("到");
                                 //myAdapter.removeItem(position);
-                                //myAdapter.notifyDataSetChanged();
+                                myAdapter.getItem(position);
+                                myAdapter.notifyDataSetChanged();
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -115,6 +114,7 @@ public class CheckActivity extends AppCompatActivity {
                 return false;
             }
         });
+
     }
 
     void fillData() {
@@ -143,6 +143,7 @@ public class CheckActivity extends AppCompatActivity {
             }
         }
     };
+
     private Response.ErrorListener mErrorListener = new Response.ErrorListener() {
 
         @Override

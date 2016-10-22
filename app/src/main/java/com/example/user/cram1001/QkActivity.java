@@ -1,6 +1,7 @@
 package com.example.user.cram1001;
 
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,14 +28,13 @@ public class QkActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);//回前頁
 
         //bData.putString("date", qk_time.getText().toString())
-        // DateInput = (Button) findViewById(R.id.qk_time);
+        //DateInput = (Button) findViewById(R.id.qk_time);
         NameInput = (EditText) findViewById(R.id.qk_name);
         ResonInput = (EditText) findViewById(R.id.qk_reson);
         PSInput = (EditText) findViewById(R.id.qk_PS);
+       // DateInput = (EditText) findViewById(R.id.editqktime);
 
         Button QkButton = (Button) findViewById(R.id.button2);
-        // Button DateButton = (Button) findViewById(R.id.qk_time);
-        //   String strDate = DateButton.getText().toString();
         QkButton.setOnClickListener(QkListener);
     }
 
@@ -45,38 +45,54 @@ public class QkActivity extends AppCompatActivity {
 
             try {
                 Button DateButton = (Button) findViewById(R.id.qk_time);
+                DateButton .getText().toString();
 
                 //螢幕擷取三項資料後上傳DB
-                String strDate = URLEncoder.encode(DateButton.getText().toString(),"UTF-8");
-                String strName = URLEncoder.encode(NameInput .getEditableText().toString(), "UTF-8");
-                String strReson = URLEncoder.encode(ResonInput.getEditableText().toString(), "UTF-8");
-                String strPS = URLEncoder.encode(PSInput.getEditableText().toString(), "UTF-8");
+                {
+                    String strDate = URLEncoder.encode(DateButton.getText().toString(), "UTF-8");
+                    String strName = URLEncoder.encode(NameInput.getEditableText().toString(), "UTF-8");
+                    String strReson = URLEncoder.encode(ResonInput.getEditableText().toString(), "UTF-8");
+                    String strPS = URLEncoder.encode(PSInput.getEditableText().toString(), "UTF-8");
 
-                String url = "https://cramschoollogin.herokuapp.com/api/insertqk?name=" + strName + "&date=" + strDate +  "&reson=" + strReson +  "&PS=" + strPS ;
-                StringRequest request = new StringRequest(Request.Method.GET, url, mOnAddSuccessListener, mOnErrorListener);
-                NetworkManager.getInstance(QkActivity.this).request(null, request);
+                    String url = "https://cramschoollogin.herokuapp.com/api/insertqk?name=" + strName + "&date=" + strDate + "&reson=" + strReson + "&PS=" + strPS;
+                    StringRequest request = new StringRequest(Request.Method.GET, url, mOnAddSuccessListener, mOnErrorListener);
+                    NetworkManager.getInstance(QkActivity.this).request(null, request);
+                }
+
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
         }
     };
 
+
+    public void showDatePickerDialog(View v)
+    {
+        DialogFragment newFragment = new DatePickerFragment();
+        Bundle bData = new Bundle();
+        bData.putInt("view", v.getId());
+
+        Button button = (Button) v;
+        bData.putString("date", button.getText().toString());
+        newFragment.setArguments(bData);
+        newFragment.show(getSupportFragmentManager(), "日期挑選器");
+    }
+
     protected Response.Listener<String> mOnAddSuccessListener = new Response.Listener<String>() {
 
         @Override
         public void onResponse(String response) {
 
-            DateInput.setText("");
+           // DateInput.setText("");
             NameInput.setText("");
             ResonInput.setText("");
             PSInput.setText("");
-            Toast.makeText(QkActivity.this, "新增成功", Toast.LENGTH_LONG).show();
+
+            Toast.makeText(QkActivity.this, "假單已送出", Toast.LENGTH_LONG).show();
 
             //結束頁面
+            QkActivity.this.finish();
 
-            Intent intent = new Intent();
-            intent.setClass(QkActivity.this, HomeActivity.class);
-            QkActivity.this.startActivity(intent);
         }
     };
 
@@ -89,16 +105,6 @@ public class QkActivity extends AppCompatActivity {
         }
     };
 
-    public void showDatePickerDialog(View v)
-    {
-        DialogFragment newFragment = new DatePickerFragment();
-        Bundle bData = new Bundle();
-        bData.putInt("view", v.getId());
-        Button button = (Button) v;
-        bData.putString("date", button.getText().toString());
-        newFragment.setArguments(bData);
-        newFragment.show(getSupportFragmentManager(), "日期挑選器");
-    }
 
     //回前頁
     public void onBackPressed() {
@@ -106,4 +112,5 @@ public class QkActivity extends AppCompatActivity {
         setResult(RESULT_OK, intent);
         finish();
     }
+
 }
