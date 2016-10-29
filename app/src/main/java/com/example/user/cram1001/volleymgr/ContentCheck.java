@@ -6,11 +6,11 @@ package com.example.user.cram1001.volleymgr;
 
 public class ContentCheck {
     public String name="";
-    //public String textcheck ="";
+    public String textcheck ="";
 
-    public ContentCheck(String nname) {
+    public ContentCheck(String nname, String narrive) {
         this.name = nname;
-        //this.textcheck = narrive;
+        this.textcheck = narrive;
     }
 
 }

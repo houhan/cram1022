@@ -54,8 +54,8 @@ public class MyAdapterCheck extends BaseAdapter {
             //建構listItem內容view
             viewTag2 = new MyAdapterCheck.ViewTag2(
                     (TextView) convertView.findViewById(
-                            R.id.name)
-                   // (TextView) convertView.findViewById(R.id.textcheck)
+                            R.id.name),
+                   (TextView) convertView.findViewById(R.id.checktext)
             );
 
             //設置容器內容
@@ -65,7 +65,7 @@ public class MyAdapterCheck extends BaseAdapter {
         }
         ContentCheck contentCheck=contentChecks.get( position);
         viewTag2.name.setText(contentCheck.name);
-      //  viewTag2.textcheck.setText(contentCheck.textcheck);
+        viewTag2.textcheck.setText(contentCheck.textcheck);
 /*
         //設定內容圖案
         switch(position){
@@ -94,12 +94,12 @@ public class MyAdapterCheck extends BaseAdapter {
     //自訂類別，表達個別listItem中的view物件集合。
     class ViewTag2 {
         TextView name;
-      //  TextView textcheck;
+        TextView textcheck;
 
 
-        public ViewTag2(TextView nname) {
+        public ViewTag2(TextView nname, TextView narrive) {
             this.name = nname;
-         //   this.textcheck = narrive;
+            this.textcheck = narrive;
 
         }
     }

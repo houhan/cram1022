@@ -32,8 +32,24 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public class BeaconActivity extends AppCompatActivity {
+    private Runnable mDetectRunnable1 = new Runnable() {
+        @Override
+        public void run() {
+            // TODO detect logic
+            mCheckBox.setChecked(false);
+            mCheckBox1.setChecked(false);
+            mHandler1.postDelayed(this,30000);
+            Log.d("Delay","BoxFalse");
+        }
+
+    };
+
+
     private BluetoothAdapter mBluetoothAdapter; //宣告一個要放入藍芽資訊的堆疊
 
     private CheckBox mCheckBox,mCheckBox1;
@@ -44,13 +60,16 @@ public class BeaconActivity extends AppCompatActivity {
     private MyAdapterCheck myAdapter;
     private Button checkbutton;
     private TextView tv1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beacon);
 
-       mCheckBox = (CheckBox) findViewById(R.id.checkBox2);
+        mCheckBox = (CheckBox) findViewById(R.id.checkBox2);
         mCheckBox1 = (CheckBox) findViewById(R.id.checkBox7);
+
+        mHandler1.postDelayed(mDetectRunnable1, 30000);
 
         BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE); //宣告藍芽資訊接收管理
         mBluetoothAdapter = bluetoothManager.getAdapter(); //將接收的資訊放入堆疊
@@ -139,11 +158,19 @@ public class BeaconActivity extends AppCompatActivity {
             Log.e("Error", error.toString());
         }*/
         //顯示學生姓名結束
+
+
     };
 
 
 
+
+
+
     private Handler mHandler = new Handler() {
+
+    };
+    private Handler mHandler1 = new Handler() {
 
     };
 
@@ -153,10 +180,12 @@ public class BeaconActivity extends AppCompatActivity {
         @Override
         public void run() {
             // TODO detect logic
-            mHandler.postDelayed(this, 1000);
+
+            mHandler.postDelayed(this,1000);
         }
 
     };
+
 
     private BluetoothAdapter.LeScanCallback mLeScanCallback = new BluetoothAdapter.LeScanCallback() {   //接收到藍芽資訊然後針對接收到的資料進行解析
         @Override
@@ -215,8 +244,10 @@ public class BeaconActivity extends AppCompatActivity {
                 mHandler.postDelayed(mDetectRunnable, 1000);
 
 
-                        mCheckBox.setChecked(false);
-                        mCheckBox1.setChecked(false);
+
+
+                        //mCheckBox.setChecked(false);
+                        //mCheckBox1.setChecked(false);
                     switch (minor) {
                         case 10:
                             beaconn = (TextView) findViewById(R.id.beacon);
@@ -234,9 +265,15 @@ public class BeaconActivity extends AppCompatActivity {
                             break;
                     }
 
+
+
             }
+
+
         }
     };
+
+
 
     static final char[] hexArray = "0123456789ABCDEF".toCharArray();
 

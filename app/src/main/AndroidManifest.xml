@@ -28,7 +28,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!-- ↓GCM -->
+        <!--
+        ↓GCM
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
             android:exported="true"
@@ -59,8 +60,21 @@
                 <action android:name="com.google.android.gms.iid.InstanceID" />
             </intent-filter>
         </service>
+        -->
 
-        <!-- ↑GCM -->
+        <!-- FCM背景接收訊息的服務 -->
+        <service
+            android:name=".Fcm.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service android:name=".Fcm.MyInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -93,10 +107,10 @@
         <activity android:name=".AddScheduleActivity" />
         <activity android:name=".CheckActivity" />
         <activity android:name=".attendanceActivity" />
-        <activity android:name=".NotificationActivity" />
+
         <activity android:name=".BeaconActivity" />
         <activity android:name=".CheckParentsActivity" />
-        <activity android:name=".MapsActivity"></activity>
+        <activity android:name=".FcmActivity"></activity>
     </application>
 
 </manifest>
