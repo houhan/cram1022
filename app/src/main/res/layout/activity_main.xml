@@ -11,33 +11,66 @@
     tools:context="com.example.user.cram1001.MainActivity"
     android:background="@drawable/background">
 
-    <EditText
-        android:layout_width="200dp"
+
+    <!--
+    <Button
+        android:text="Button"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editID"
-        android:layout_marginTop="157dp"
-        android:layout_marginRight="37dp"
-        android:layout_marginEnd="37dp"
+        android:id="@+id/set"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignStart="@+id/button" />
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="23dp" />
 
-    <EditText
-        android:layout_width="200dp"
+    <Button
+        android:text="Button"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/get"
+        android:layout_alignBaseline="@+id/set"
+        android:layout_alignBottom="@+id/set"
+        android:layout_alignEnd="@+id/editID" />
+-->
+    <!--
+    <CheckBox
+        android:text="記住帳密"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/saveaccount"
+        android:layout_alignBaseline="@+id/button"
+        android:layout_alignBottom="@+id/button"
+        android:layout_toStartOf="@+id/button" />
 
-        android:id="@+id/editPWD"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:layout_marginTop="210dp"
-        android:layout_marginRight="37dp"
-        android:layout_marginEnd="37dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignStart="@+id/editID" />
+    <CheckBox
+        android:text="自動登入"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/create"
+        android:layout_alignStart="@+id/saveaccount"
+        android:id="@+id/autologin" />
 
+
+-->
+
+    <CheckBox
+        android:text="記住密碼"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkBox8"
+        android:layout_marginBottom="113dp"
+        android:layout_above="@+id/create"
+        android:layout_alignStart="@+id/textView2" />
+
+    <CheckBox
+        android:text="自動登入"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkBox9"
+
+        android:layout_alignBaseline="@+id/checkBox8"
+        android:layout_alignBottom="@+id/checkBox8"
+        android:layout_alignEnd="@+id/editPWD"
+        android:layout_marginEnd="14dp" />
 
     <Button
         style="oval"
@@ -46,7 +79,49 @@
         android:id="@+id/create"
         android:alpha="100"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/button" />
+        android:layout_toEndOf="@+id/checkBox8" />
+
+    <EditText
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+
+        android:id="@+id/editPWD"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:layout_marginRight="37dp"
+
+        android:layout_marginBottom="52dp"
+        android:layout_above="@+id/checkBox8"
+        android:layout_alignStart="@+id/editID" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="密碼："
+        android:id="@+id/textView2"
+        android:textSize="25dp"
+        android:layout_marginStart="43dp"
+        android:layout_alignBottom="@+id/editPWD"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="帳號："
+        android:id="@+id/textView"
+        android:textSize="25dp"
+        android:layout_marginBottom="58dp"
+        android:layout_above="@+id/editPWD"
+        android:layout_toStartOf="@+id/editPWD"
+        android:layout_marginEnd="19dp" />
+
+    <EditText
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/editID"
+        android:layout_marginRight="37dp"
+        android:layout_alignBottom="@+id/textView"
+        android:layout_toEndOf="@+id/checkBox8" />
 
     <Button
         android:layout_height="70dp"
@@ -55,38 +130,11 @@
         style="oval"
         android:background="@drawable/login"
         android:clickable="false"
-        android:layout_marginBottom="23dp"
-        android:layout_above="@+id/create"
-        android:layout_centerHorizontal="true"
-        android:layout_width="150dp" />
+        android:layout_width="150dp"
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="密碼"
-        android:id="@+id/textView2"
-        android:textSize="25dp"
-        android:layout_alignTop="@+id/editPWD"
-        android:layout_alignStart="@+id/textView" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="帳號"
-        android:id="@+id/textView"
-        android:textSize="25dp"
-        android:layout_alignBottom="@+id/editID"
-        android:layout_toStartOf="@+id/button"
-        android:layout_marginEnd="12dp" />
-
-    <FrameLayout
-        android:background="@drawable/shape"
-        android:layout_height="200dp"
-        android:layout_width="300dp"
         android:layout_marginBottom="12dp"
-        android:layout_above="@+id/button"
-        android:layout_centerHorizontal="true">
+        android:layout_above="@+id/create"
+        android:layout_alignEnd="@+id/create" />
 
-    </FrameLayout>
 
 </RelativeLayout>

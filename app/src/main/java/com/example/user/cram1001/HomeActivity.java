@@ -1,22 +1,50 @@
 package com.example.user.cram1001;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.user.cram1001.Fcm.GCMUtils;
+import com.example.user.cram1001.volleymgr.NetworkManager;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.FirebaseInstanceIdService;
+
+import java.net.URLEncoder;
 
 public class HomeActivity extends AppCompatActivity {
-    private String UID;
+    private String UID,UNAME,UUSER;
+    private TextView UIDtest;
+    private static final String TAG = "MyFirebaseIIDService";
+    private ProgressDialog mProgressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-    /*
         Intent intent = this.getIntent();
-        UID = intent.getStringExtra("UID");
-*/
+      UUSER = intent.getStringExtra("UUSER");
+        //UNAME = intent.getStringExtra("UNAME");
+
+        UIDtest = (TextView) findViewById(R.id.UIDtest);
+        UIDtest.setText(UUSER);
+
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage("Please wait");
+        mProgressDialog.setCanceledOnTouchOutside(false);
 
 
         Button button = (Button) findViewById(R.id.billboard);//取得按鈕
@@ -72,6 +100,49 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        String token = GCMUtils.getSavedToken(this);
+        if (TextUtils.isEmpty(token)) {
+            AsyncTask<Void, Void, Void> getTokenTask = new AsyncTask<Void, Void, Void>() {
+
+                @Override
+                protected Void doInBackground(Void... params) {
+                    String token = GCMUtils.getGCMToken(HomeActivity.this);
+                    if (!TextUtils.isEmpty(token)) {
+                        GCMUtils.saveToken(HomeActivity.this, token);
+                        Log.d("Token",token);
+                        String strUser = URLEncoder.encode(UUSER);
+                        String strToken = URLEncoder.encode(token);
+                        String url = "https://cramschoollogin.herokuapp.com/api/insertRegId?user=" + strUser + "&regid=" + strToken;
+                        StringRequest request = new StringRequest(Request.Method.GET, url, tokenAddSuccessListener, tokenErrorListener);
+                        NetworkManager.getInstance(HomeActivity.this).request(null, request);
+
+                    }
+                    return null;
+                }
+            };
+            getTokenTask.execute();
+        }
 
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+    protected Response.Listener<String> tokenAddSuccessListener = new Response.Listener<String>() {
+
+        @Override
+        public void onResponse(String response) {
+
+        }
+    };
+
+    protected Response.ErrorListener tokenErrorListener = new Response.ErrorListener() {
+
+        @Override
+        public void onErrorResponse(VolleyError err) {
+
+            Toast.makeText(HomeActivity.this, "Err " + err.toString(), Toast.LENGTH_LONG).show();
+        }
+    };
+
 }

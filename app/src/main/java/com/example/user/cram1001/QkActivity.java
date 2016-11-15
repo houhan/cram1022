@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -21,15 +22,22 @@ import java.net.URLEncoder;
 
 public class QkActivity extends AppCompatActivity {
     private EditText DateInput,NameInput,ResonInput,PSInput;
+    private TextView USERname;
+    private String UNAME;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qk);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);//回前頁
 
+        Intent intent = this.getIntent();
+        UNAME = intent.getStringExtra("UNAME");
+
+        USERname = (TextView) findViewById(R.id.qk_name);
+        USERname.setText(UNAME);
         //bData.putString("date", qk_time.getText().toString())
         //DateInput = (Button) findViewById(R.id.qk_time);
-        NameInput = (EditText) findViewById(R.id.qk_name);
+        //NameInput = (EditText) findViewById(R.id.qk_name);
         ResonInput = (EditText) findViewById(R.id.qk_reson);
         PSInput = (EditText) findViewById(R.id.qk_PS);
        // DateInput = (EditText) findViewById(R.id.editqktime);

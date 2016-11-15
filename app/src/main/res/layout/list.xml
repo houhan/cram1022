@@ -11,11 +11,10 @@
     <ListView
         android:id="@+id/listView"
         android:layout_weight="0.62"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
     <!--<TextView-->
     <!--android:id="@+id/empty"-->

@@ -71,7 +71,7 @@
                 android:layout_column="0"
                 android:textSize="25dp" />
 
-            <EditText
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:id="@+id/qk_name"

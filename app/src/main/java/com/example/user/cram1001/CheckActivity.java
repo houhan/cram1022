@@ -55,6 +55,13 @@ public class CheckActivity extends AppCompatActivity {
       //  setContentView(R.layout.activity_check);
         setContentView(R.layout.list_check);
 
+        Button notifibutton = (Button) findViewById(R.id.notifi);
+        notifibutton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+
+            }
+        });
+
        Button checkbutton = (Button) findViewById(R.id.btn);
         checkbutton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
@@ -197,9 +204,6 @@ public class CheckActivity extends AppCompatActivity {
                 Log.d("BLE","distance:"+calculateAccuracy(txPower,rssi));
                 mHandler.postDelayed(mDetectRunnable, 1000);
 
-
-
-
                 //mCheckBox.setChecked(false);
                 //mCheckBox1.setChecked(false);
                 switch (minor) {
@@ -211,6 +215,16 @@ public class CheckActivity extends AppCompatActivity {
                     case 13:
                         ContentCheck chk1 = (ContentCheck) myAdapter.getItem(1);
                         chk1.textcheck = "ARRIVE";
+                        myAdapter.notifyDataSetChanged();
+                        break;
+                    case 12:
+                        ContentCheck chk2 = (ContentCheck) myAdapter.getItem(2);
+                        chk2.textcheck = "ARRIVE";
+                        myAdapter.notifyDataSetChanged();
+                        break;
+                    case 8:
+                        ContentCheck chk3 = (ContentCheck) myAdapter.getItem(3);
+                        chk3.textcheck = "ARRIVE";
                         myAdapter.notifyDataSetChanged();
                         break;
                     default:

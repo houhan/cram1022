@@ -20,56 +20,24 @@
 
     <!-- 地圖 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/logo2"
+        android:icon="@drawable/logo1112"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!--
-        ↓GCM
-        <receiver
-            android:name="com.google.android.gms.gcm.GcmReceiver"
-            android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-
-                <category android:name="com.example.user.cram1001.GCM" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-
-                <category android:name="com.example.user.cram1001.GCM" />
-            </intent-filter>
-        </receiver>
-
-        <service
-            android:name=".GCM.MyGcmListenerService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-            </intent-filter>
-        </service>
-        <service
-            android:name=".GCM.MyInstanceIDListenerService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.android.gms.iid.InstanceID" />
-            </intent-filter>
-        </service>
-        -->
-
         <!-- FCM背景接收訊息的服務 -->
-        <service
-            android:name=".Fcm.MyFirebaseMessagingService">
+        <service android:name=".Fcm.MyFirebaseMessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <service android:name=".Fcm.MyInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
@@ -104,13 +72,43 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.user.cram1001.HomeActivity" />
         </activity>
+        <activity
+            android:name=".Billboard_teacherActivity"
+            android:parentActivityName=".Home_teacherActivity">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.user.cram1001.HomeActivity" />
+        </activity>
         <activity android:name=".AddScheduleActivity" />
         <activity android:name=".CheckActivity" />
         <activity android:name=".attendanceActivity" />
-
         <activity android:name=".BeaconActivity" />
         <activity android:name=".CheckParentsActivity" />
-        <activity android:name=".FcmActivity"></activity>
+        <activity android:name=".FcmActivity" />
+        <activity android:name=".Home_teacherActivity" />
+
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+        -->
+        <!--
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <activity
+            android:name=".MapsActivity"
+            android:label="@string/title_activity_maps"></activity>
+        -->
+        <activity android:name=".Ok_teacherActivity"></activity>
     </application>
 
 </manifest>

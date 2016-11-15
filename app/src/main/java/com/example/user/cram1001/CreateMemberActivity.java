@@ -19,7 +19,7 @@ import java.net.URLEncoder;
 
 public class CreateMemberActivity extends AppCompatActivity {
 
-    private EditText AccountInput,PasswordInput,NameInput;
+    private EditText AccountInput,PasswordInput,NameInput,MinorInput;
     private ProgressDialog mProgressDialog;
     private String RegID;
     @Override
@@ -30,6 +30,7 @@ public class CreateMemberActivity extends AppCompatActivity {
         AccountInput = (EditText) findViewById(R.id.createid);
         PasswordInput = (EditText) findViewById(R.id.createpwd);
         NameInput = (EditText) findViewById(R.id.createname);
+        MinorInput = (EditText) findViewById(R.id.beaconminor);
 
         Button CreateButton = (Button) findViewById(R.id.test);
         CreateButton.setOnClickListener(CreateMemberListener);
@@ -84,9 +85,10 @@ public class CreateMemberActivity extends AppCompatActivity {
                 String strAccount = URLEncoder.encode(AccountInput.getEditableText().toString(), "UTF-8");
                 String strPassword = URLEncoder.encode(PasswordInput.getEditableText().toString(), "UTF-8");
                 String strName = URLEncoder.encode(NameInput.getEditableText().toString(), "UTF-8");
+                String strminor = URLEncoder.encode(MinorInput.getEditableText().toString(), "UTF-8");
                 mProgressDialog.show();
 
-                String url = "https://cramschoollogin.herokuapp.com/api/insert?user=" + strAccount + "&password=" + strPassword +  "&name=" + strName ;
+                String url = "https://cramschoollogin.herokuapp.com/api/insert?user=" + strAccount + "&password=" + strPassword +  "&name=" + strName + "&minor=" + strminor ;
                 StringRequest request = new StringRequest(Request.Method.GET, url, mOnAddSuccessListener, mOnErrorListener);
                 NetworkManager.getInstance(CreateMemberActivity.this).request(null, request);
             } catch (UnsupportedEncodingException e) {
