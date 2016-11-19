@@ -1,4 +1,4 @@
-package com.example.user.cram1001;
+package com.example.user.cram1001.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,34 +7,34 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.user.cram1001.volleymgr.ContentTest;
+import com.example.user.cram1001.R;
+
 
 import java.util.ArrayList;
 
 /**
- * Created by user on 2016/8/7.
+ * Created by user on 2016/10/8.
  */
 
-public class MyAdapter extends BaseAdapter {
-
+public class MyAdapterCheck extends BaseAdapter {
     private LayoutInflater myInflater;
     // CharSequence[] list = null;
-    private ArrayList<ContentTest> contentTests;
-    public MyAdapter(Context ctxt, ArrayList<ContentTest> contentTests) {
+    private ArrayList<ContentCheck> contentChecks;
+    public MyAdapterCheck(Context ctxt, ArrayList<ContentCheck> contentChecks) {
         myInflater = LayoutInflater.from(ctxt);
-        this.contentTests=contentTests;
+        this.contentChecks=contentChecks;
         // this.list = list;
 
     }
 
     @Override
     public int getCount() {
-        return  this.contentTests.size();
+        return  this.contentChecks.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return contentTests.get(position);
+        return contentChecks.get(position);
     }
 
     @Override
@@ -45,31 +45,27 @@ public class MyAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         //自訂類別，表達個別listItem中的view物件集合。
-        ViewTag viewTag;
+        MyAdapterCheck.ViewTag2 viewTag2;
 
         if (convertView == null) {
             //取得listItem容器 view
-            convertView = myInflater.inflate(R.layout.adapter, null);
+            convertView = myInflater.inflate(R.layout.adapter_check, null);
 
             //建構listItem內容view
-            viewTag = new ViewTag(
+            viewTag2 = new MyAdapterCheck.ViewTag2(
                     (TextView) convertView.findViewById(
-                            R.id.textdate),
-                    (TextView) convertView.findViewById(
-                            R.id.texttitle),
-                    (TextView) convertView.findViewById(
-                            R.id.textcontent)
+                            R.id.name),
+                   (TextView) convertView.findViewById(R.id.checktext)
             );
 
             //設置容器內容
-            convertView.setTag(viewTag);
+            convertView.setTag(viewTag2);
         } else {
-            viewTag = (ViewTag) convertView.getTag();
+            viewTag2= (MyAdapterCheck.ViewTag2) convertView.getTag();
         }
-        ContentTest contentTest=contentTests.get( position);
-        viewTag.date.setText(contentTest.date);
-        viewTag.title.setText(contentTest.title);
-        viewTag.content .setText(contentTest.content);
+        ContentCheck contentCheck=contentChecks.get( position);
+        viewTag2.name.setText(contentCheck.name);
+        viewTag2.textcheck.setText(contentCheck.textcheck);
 /*
         //設定內容圖案
         switch(position){
@@ -96,15 +92,15 @@ public class MyAdapter extends BaseAdapter {
 
 
     //自訂類別，表達個別listItem中的view物件集合。
-    class ViewTag {
-        TextView date;
-        TextView title;
-        TextView content;
+    class ViewTag2 {
+        TextView name;
+        TextView textcheck;
 
-        public ViewTag(TextView ndate, TextView ntitle, TextView ncontent) {
-            this.date = ndate;
-            this.title = ntitle;
-            this.content = ncontent;
+
+        public ViewTag2(TextView nname, TextView narrive) {
+            this.name = nname;
+            this.textcheck = narrive;
+
         }
     }
 

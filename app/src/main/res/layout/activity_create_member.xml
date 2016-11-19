@@ -10,6 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.user.cram1001.CreateMemberActivity"
     android:background="@drawable/background">
+
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,7 +28,8 @@
         android:textSize="25sp"
         android:layout_alignBaseline="@+id/createid"
         android:layout_alignBottom="@+id/createid"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="?android:attr/panelColorBackground"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -48,7 +50,8 @@
         android:id="@+id/textView15"
         android:layout_alignBaseline="@+id/createpwd"
         android:layout_alignBottom="@+id/createpwd"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="?android:attr/panelColorBackground"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -67,26 +70,39 @@
         android:id="@+id/textView16"
         android:layout_alignBaseline="@+id/createname"
         android:layout_alignBottom="@+id/createname"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="?android:attr/panelColorBackground"/>
+
+
+    <TextView
+        android:text="班級 :"
+        android:textSize="25sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView17"
+        android:textColor="?android:attr/panelColorBackground"
+        android:layout_below="@+id/createname"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="13dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="註冊"
         android:id="@+id/test"
-        android:layout_below="@+id/createname"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="88dp" />
+        android:textColor="?android:attr/panelColorBackground"
+        android:layout_marginTop="67dp"
+        android:layout_below="@+id/textView18"
+        android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:text="Beacon Minor："
-        android:textSize="25sp"
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView17"
-        android:layout_below="@+id/createname"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="18dp" />
+        android:id="@+id/createrclass"
+        android:layout_alignBottom="@+id/textView17"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/test"
+        android:layout_alignStart="@+id/createname" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -94,8 +110,18 @@
         android:inputType="textPersonName"
         android:ems="10"
         android:id="@+id/beaconminor"
-        android:layout_alignBaseline="@+id/textView17"
-        android:layout_alignBottom="@+id/textView17"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/textView17" />
+        android:layout_alignTop="@+id/textView18"
+        android:layout_above="@+id/test"
+        android:layout_toEndOf="@+id/textView18" />
+
+    <TextView
+        android:text="Beacon Minor："
+        android:textSize="25sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView18"
+        android:textColor="?android:attr/panelColorBackground"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
+
 </RelativeLayout>

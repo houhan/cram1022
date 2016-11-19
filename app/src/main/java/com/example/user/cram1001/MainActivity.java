@@ -13,6 +13,7 @@ import java.net.URLEncoder;
 import android.support.v7.widget.ShareActionProvider;
 import android.test.ServiceTestCase;
 import android.text.TextUtils;
+import android.util.Xml;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -44,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
     private ProgressDialog mProgressDialog, nProgressDialog, oProgressDialog;
     private CheckBox check1,check2;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,8 +72,9 @@ public class MainActivity extends AppCompatActivity {
         String strPassword = PasswordInput.getText().toString();
         String strTeacher = PasswordInput.getText().toString();
 
-        Button button = (Button) findViewById(R.id.create);//取得按鈕
-        button.setOnClickListener(new View.OnClickListener() {
+        Button buttontest = (Button) findViewById(R.id.create);//取得按鈕
+      // buttontest.setOnClickListener(TestListener);
+        buttontest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         nProgressDialog.setMessage("密碼錯誤");
 
         check1 =(CheckBox)findViewById(R.id.checkBox8);
-        check2 =(CheckBox)findViewById(R.id.checkBox9);
+        //check2 =(CheckBox)findViewById(R.id.checkBox9);
         //SharedPreferences將name 和 pass 記錄起來 每次進去軟體時 開始從中讀取資料 放入login_name，login_password中
         SharedPreferences remdname=getPreferences(MainActivity.MODE_PRIVATE);
         String name_str=remdname.getString("name", "");
@@ -157,9 +158,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private View.OnClickListener LogInListener = new View.OnClickListener() {
 
-
         public void onClick(View v) {
-
                 try {
                     String strAccount = URLEncoder.encode(AccountInput.getEditableText().toString(), "UTF-8");
 
@@ -171,15 +170,12 @@ public class MainActivity extends AppCompatActivity {
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
-
             }
-
-
 
     };
 
     protected Response.Listener<String> AccountSuccessListener = new Response.Listener<String>() {
-        private String user,name,UNAME;
+        private String user,name,UNAME,UNMAE2;
 
         @Override
         public void onResponse(String response) {
@@ -228,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
     protected Listener<String> LoginSuccessListener = new Listener<String>() {
-        private String DataPassword,UID,minor,UNAME,UUSER;
+        private String DataPassword,UID,minor,UNAME,UUSER,UClass,UNAME2;
 
         @Override
         public void onResponse(String response) {
@@ -242,6 +238,8 @@ public class MainActivity extends AppCompatActivity {
                     UID = obj.getString("_id");
                     UNAME = obj.getString("name");
                     UUSER = obj.getString("user");
+                    UClass = obj.getString("room");
+
 
                 }
             } catch (JSONException e1) {
@@ -251,9 +249,9 @@ public class MainActivity extends AppCompatActivity {
             }
             //String strPassword = PasswordInput.getEditableText().toString();
             String strPassword = md5(PasswordInput.getEditableText().toString());
-//UID.equals("5826b842443d5500043ac2cf")&
+
             //將抓下來的密碼與輸入密碼比較
-            if (DataPassword.equals(strPassword)&UUSER.equals("teacher")) {
+            if (DataPassword.equals(strPassword)&(UUSER.equals("teacher") || UUSER.equals("teacher2"))) {
                 mProgressDialog.dismiss();
                 Intent intent = new Intent(MainActivity.this, Home_teacherActivity.class);
                 intent.setClass(MainActivity.this, Home_teacherActivity.class);
@@ -270,9 +268,17 @@ public class MainActivity extends AppCompatActivity {
             intent.setClass(MainActivity.this, HomeActivity.class);
             intent.putExtra("UUSER", UUSER);
 
+                intent.putExtra("UClass", UClass);
             Intent intent2 = new Intent(MainActivity.this, QkActivity.class);
             intent2.setClass(MainActivity.this, QkActivity.class);
+                intent.putExtra("UNAME", UNAME);
                 intent2.putExtra("UNAME", UNAME);
+                Intent intent3 = new Intent(MainActivity.this, HomeActivity.class);
+                intent3.setClass(MainActivity.this, HomeActivity.class);
+                intent3.putExtra("UClass", UClass);
+
+
+
 
             startActivity(intent);
             }
@@ -338,5 +344,76 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+   /* private SendGCM ()
+    {
+        String BrowserAPIKey = "這裡請輸入剛剛申請的API Key";
+        String message = "這裡請輸入您所要傳送的訊息";
+        String tickerText = "example test GCM";
+        String contentTitle = "content title GCM";
+        String postData = "{ \"registration_ids\": [ \"" + 這裡請填入要傳送的裝置ID + "\" ], \"data\": {\"tickerText\":\"" + tickerText + "\", \"contentTitle\":\"" + contentTitle + "\", \"message\": \"" + message + "\"}}";
+        String response = SendGCMNotification(BrowserAPIKey, postData);
+        String reponse = response;
+    }
+    private String SendGCMNotification(String apiKey, String postData, String postDataContentType = "application/json")
+    {
+        ServicePointManager.ServerCertificateValidationCallback += new RemoteCertificateValidationCallback(ValidateServerCertificate);
+
+        //  MESSAGE CONTENT
+        byte[] byteArray = Xml.Encoding.UTF8.GetBytes(postData);
+
+        //  CREATE REQUEST
+        HttpWebRequest Request = (HttpWebRequest)WebRequest.Create("https://android.googleapis.com/gcm/send");
+        Request.Method = "POST";
+        Request.KeepAlive = false;
+        Request.ContentType = postDataContentType;
+        Request.Headers.Add(string.Format("Authorization: key={0}", apiKey));
+        Request.ContentLength = byteArray.Length;
+
+        Stream dataStream = Request.GetRequestStream();
+        dataStream.Write(byteArray, 0, byteArray.Length);
+        dataStream.Close();
+
+        //  SEND MESSAGE
+        string error;
+        try
+        {
+            WebResponse Response = Request.GetResponse();
+            HttpStatusCode ResponseCode = ((HttpWebResponse)Response).StatusCode;
+            if (ResponseCode.Equals(HttpStatusCode.Unauthorized) || ResponseCode.Equals(HttpStatusCode.Forbidden))
+            {
+                error = "Unauthorized - need new token";
+
+            }
+            else if (!ResponseCode.Equals(HttpStatusCode.OK))
+            {
+                error = "Response from web service isn't OK";
+            }
+
+            StreamReader Reader = new StreamReader(Response.GetResponseStream());
+            string responseLine = Reader.ReadToEnd();
+            Reader.Close();
+
+            return responseLine;
+        }
+        catch (Exception e)
+        {
+            error = e.ToString();
+        }
+        return error;
+    }
+
+    public static bool ValidateServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+    {
+        return true;
+
+
+    }*/
+//    private View.OnClickListener TestListener = new View.OnClickListener() {
+//
+//        public void onClick(View v) {
+//
+//        }
+//
+//    };
 
 }

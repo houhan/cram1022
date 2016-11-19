@@ -63,15 +63,6 @@
             android:layout_height="110dp" />
 
         <Button
-            android:layout_width="match_parent"
-            android:id="@+id/schedule"
-
-            android:layout_alignTop="@+id/Catch"
-            android:layout_alignParentEnd="true"
-            android:background="@drawable/schedule"
-            android:layout_height="110dp" />
-
-        <Button
             android:text="Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -85,9 +76,17 @@
         android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/Uclass"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="61dp" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/UIDtest"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="25dp"
-        android:id="@+id/UIDtest"
-        android:layout_alignParentEnd="true" />
+        android:layout_marginStart="17dp" />
 </RelativeLayout>

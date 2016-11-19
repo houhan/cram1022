@@ -33,7 +33,7 @@ public class QkActivity extends AppCompatActivity {
         Intent intent = this.getIntent();
         UNAME = intent.getStringExtra("UNAME");
 
-        USERname = (TextView) findViewById(R.id.qk_name);
+        USERname = (TextView) findViewById(R.id.name22);
         USERname.setText(UNAME);
         //bData.putString("date", qk_time.getText().toString())
         //DateInput = (Button) findViewById(R.id.qk_time);
@@ -58,7 +58,7 @@ public class QkActivity extends AppCompatActivity {
                 //螢幕擷取三項資料後上傳DB
                 {
                     String strDate = URLEncoder.encode(DateButton.getText().toString(), "UTF-8");
-                    String strName = URLEncoder.encode(NameInput.getEditableText().toString(), "UTF-8");
+                    String strName = URLEncoder.encode(USERname.getEditableText().toString(), "UTF-8");
                     String strReson = URLEncoder.encode(ResonInput.getEditableText().toString(), "UTF-8");
                     String strPS = URLEncoder.encode(PSInput.getEditableText().toString(), "UTF-8");
 
@@ -91,8 +91,8 @@ public class QkActivity extends AppCompatActivity {
         @Override
         public void onResponse(String response) {
 
-           // DateInput.setText("");
-            NameInput.setText("");
+            DateInput.setText("");
+//            NameInput.setText("");
             ResonInput.setText("");
             PSInput.setText("");
 

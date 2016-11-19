@@ -19,7 +19,7 @@ import java.net.URLEncoder;
 
 public class CreateMemberActivity extends AppCompatActivity {
 
-    private EditText AccountInput,PasswordInput,NameInput,MinorInput;
+    private EditText AccountInput,PasswordInput,NameInput,MinorInput,ClassInput;
     private ProgressDialog mProgressDialog;
     private String RegID;
     @Override
@@ -31,6 +31,7 @@ public class CreateMemberActivity extends AppCompatActivity {
         PasswordInput = (EditText) findViewById(R.id.createpwd);
         NameInput = (EditText) findViewById(R.id.createname);
         MinorInput = (EditText) findViewById(R.id.beaconminor);
+        ClassInput = (EditText)findViewById(R.id.createrclass);
 
         Button CreateButton = (Button) findViewById(R.id.test);
         CreateButton.setOnClickListener(CreateMemberListener);
@@ -86,9 +87,10 @@ public class CreateMemberActivity extends AppCompatActivity {
                 String strPassword = URLEncoder.encode(PasswordInput.getEditableText().toString(), "UTF-8");
                 String strName = URLEncoder.encode(NameInput.getEditableText().toString(), "UTF-8");
                 String strminor = URLEncoder.encode(MinorInput.getEditableText().toString(), "UTF-8");
+                String strclass = URLEncoder.encode(ClassInput.getEditableText().toString(), "UTF-8");
                 mProgressDialog.show();
 
-                String url = "https://cramschoollogin.herokuapp.com/api/insert?user=" + strAccount + "&password=" + strPassword +  "&name=" + strName + "&minor=" + strminor ;
+                String url = "https://cramschoollogin.herokuapp.com/api/insert?user=" + strAccount + "&password=" + strPassword +  "&name=" + strName + "&minor=" + strminor +"&room=" + strclass;
                 StringRequest request = new StringRequest(Request.Method.GET, url, mOnAddSuccessListener, mOnErrorListener);
                 NetworkManager.getInstance(CreateMemberActivity.this).request(null, request);
             } catch (UnsupportedEncodingException e) {
@@ -105,6 +107,7 @@ public class CreateMemberActivity extends AppCompatActivity {
             AccountInput.setText("");
             PasswordInput.setText("");
             NameInput.setText("");
+            ClassInput.setText("");
             Toast.makeText(CreateMemberActivity.this, "新增成功", Toast.LENGTH_LONG).show();
 
             //結束頁面

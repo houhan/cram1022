@@ -26,8 +26,8 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
 import java.net.URLEncoder;
 
 public class HomeActivity extends AppCompatActivity {
-    private String UID,UNAME,UUSER;
-    private TextView UIDtest;
+    private String UID,UUSER,UCLASS;
+    private TextView UIDtest,CLASS;
     private static final String TAG = "MyFirebaseIIDService";
     private ProgressDialog mProgressDialog;
     @Override
@@ -36,11 +36,19 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         Intent intent = this.getIntent();
-      UUSER = intent.getStringExtra("UUSER");
+        UUSER = intent.getStringExtra("UUSER");
+        UCLASS = intent.getStringExtra("UClass");
+
         //UNAME = intent.getStringExtra("UNAME");
 
         UIDtest = (TextView) findViewById(R.id.UIDtest);
         UIDtest.setText(UUSER);
+        CLASS = (TextView) findViewById(R.id.Uclass);
+        CLASS.setText(UCLASS);
+
+//        Intent intent2 = new Intent(HomeActivity.this, QkActivity.class);
+//        intent2.setClass(HomeActivity.this, QkActivity.class);
+//        intent2.putExtra("UNAME", UNAME);
 
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setMessage("Please wait");
@@ -63,7 +71,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(HomeActivity.this, QkActivity.class);
+                intent.setClass(HomeActivity.this,QkActivity.class);
                 HomeActivity.this.startActivity(intent);
             }
         });
@@ -80,15 +88,7 @@ public class HomeActivity extends AppCompatActivity {
         });
 */
 
-        Button button4 = (Button) findViewById(R.id.schedule);//取得按鈕
-        button4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(HomeActivity.this, AddBillboardActivity.class);
-                HomeActivity.this.startActivity(intent);
-            }
-        });
+
 
         Button button5 = (Button) findViewById(R.id.attendance);//取得按鈕
         button5.setOnClickListener(new View.OnClickListener() {

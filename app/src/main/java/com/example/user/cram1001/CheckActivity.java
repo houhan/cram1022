@@ -1,12 +1,10 @@
 package com.example.user.cram1001;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
-import android.content.DialogInterface;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -14,30 +12,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.example.user.cram1001.volleymgr.ContentCheck;
+import com.example.user.cram1001.Adapter.ContentCheck;
+import com.example.user.cram1001.Adapter.MyAdapterCheck;
 import com.example.user.cram1001.volleymgr.NetworkManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-
-import static android.R.attr.format;
 
 
 public class CheckActivity extends AppCompatActivity {
@@ -48,11 +39,12 @@ public class CheckActivity extends AppCompatActivity {
     private ListView listView;
     private MyAdapterCheck myAdapter;
     private Button checkbutton;
-    private TextView tv1;
+    private TextView tv1,UUClass;
+    private String UClass;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-      //  setContentView(R.layout.activity_check);
+       // setContentView(R.layout.activity_check);
         setContentView(R.layout.list_check);
 
         Button notifibutton = (Button) findViewById(R.id.notifi);
@@ -90,6 +82,12 @@ public class CheckActivity extends AppCompatActivity {
             startActivityForResult(enableBluetooth, 1);
         }
         mBluetoothAdapter.startLeScan(mLeScanCallback); //開始接收藍芽資訊
+        //Class顯示
+       /* Intent intent3 = this.getIntent();
+        UClass = intent3.getStringExtra("UClass");
+
+        UUClass = (TextView) findViewById(R.id.textView21);
+        UUClass.setText(UClass);*/
 
     }
 
@@ -101,7 +99,7 @@ public class CheckActivity extends AppCompatActivity {
         @Override
         public void onResponse(String string) {
             Log.d("Response", string);
-            // contentTest=new ArrayList<ContentTest>();
+           //contentTest=new ArrayList<ContentTest>();
             try {
 
                 JSONArray ary = new JSONArray(string);

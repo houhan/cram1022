@@ -1,4 +1,4 @@
-package com.example.user.cram1001;
+package com.example.user.cram1001.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,34 +7,33 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.user.cram1001.volleymgr.ContentCheck;
-
+import com.example.user.cram1001.R;
 
 import java.util.ArrayList;
 
 /**
- * Created by user on 2016/10/8.
+ * Created by user on 2016/11/15.
  */
 
-public class MyAdapterCheck extends BaseAdapter {
+public class MyAdapterQk extends BaseAdapter {
     private LayoutInflater myInflater;
     // CharSequence[] list = null;
-    private ArrayList<ContentCheck> contentChecks;
-    public MyAdapterCheck(Context ctxt, ArrayList<ContentCheck> contentChecks) {
+    private ArrayList<ContentQk> contentQks;
+    public MyAdapterQk(Context ctxt, ArrayList<ContentQk> contentQks) {
         myInflater = LayoutInflater.from(ctxt);
-        this.contentChecks=contentChecks;
+        this.contentQks=contentQks;
         // this.list = list;
 
     }
 
     @Override
     public int getCount() {
-        return  this.contentChecks.size();
+        return  this.contentQks.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return contentChecks.get(position);
+        return contentQks.get(position);
     }
 
     @Override
@@ -45,27 +44,31 @@ public class MyAdapterCheck extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         //自訂類別，表達個別listItem中的view物件集合。
-        MyAdapterCheck.ViewTag2 viewTag2;
+        MyAdapterQk.ViewTag3 viewTag3;
 
         if (convertView == null) {
             //取得listItem容器 view
-            convertView = myInflater.inflate(R.layout.adapter_check, null);
+            convertView = myInflater.inflate(R.layout.adapter_qk, null);
 
             //建構listItem內容view
-            viewTag2 = new MyAdapterCheck.ViewTag2(
+            viewTag3 = new MyAdapterQk.ViewTag3(
                     (TextView) convertView.findViewById(
-                            R.id.name),
-                   (TextView) convertView.findViewById(R.id.checktext)
+                            R.id.tqkname),
+                    (TextView) convertView.findViewById(R.id.tqkdate),
+                    (TextView) convertView.findViewById(R.id.tqkreason),
+                    (TextView) convertView.findViewById(R.id.tqkps)
             );
 
             //設置容器內容
-            convertView.setTag(viewTag2);
+            convertView.setTag(viewTag3);
         } else {
-            viewTag2= (MyAdapterCheck.ViewTag2) convertView.getTag();
+            viewTag3= (MyAdapterQk.ViewTag3) convertView.getTag();
         }
-        ContentCheck contentCheck=contentChecks.get( position);
-        viewTag2.name.setText(contentCheck.name);
-        viewTag2.textcheck.setText(contentCheck.textcheck);
+        ContentQk contentQk=contentQks.get( position);
+        viewTag3.name.setText(contentQk.name);
+        viewTag3.date.setText(contentQk.date);
+        viewTag3.reason.setText(contentQk.reason);
+        viewTag3.ps.setText(contentQk.ps);
 /*
         //設定內容圖案
         switch(position){
@@ -92,17 +95,20 @@ public class MyAdapterCheck extends BaseAdapter {
 
 
     //自訂類別，表達個別listItem中的view物件集合。
-    class ViewTag2 {
+    class ViewTag3 {
         TextView name;
-        TextView textcheck;
+        TextView date;
+        TextView reason;
+        TextView ps;
 
-
-        public ViewTag2(TextView nname, TextView narrive) {
+        public ViewTag3(TextView nname, TextView ndate , TextView nreason , TextView nps) {
             this.name = nname;
-            this.textcheck = narrive;
+            this.date = ndate;
+            this.reason = nreason;
+            this.ps = nps;
 
         }
     }
 
-
 }
+

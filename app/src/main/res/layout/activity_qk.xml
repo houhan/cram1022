@@ -10,10 +10,14 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.user.cram1001.QkActivity"
     android:background="@drawable/background">
+
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:id="@+id/tableLayout2">
+        android:id="@+id/tableLayout2"
+        android:layout_marginTop="32dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
         <TableRow
             android:layout_width="match_parent"
@@ -27,7 +31,8 @@
                 android:textSize="25dp"
                 android:layout_alignBottom="@+id/qk_time"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:textColor="#000000" />
 
             <Button
                 android:layout_width="250dp"
@@ -69,13 +74,17 @@
                 android:text="學生姓名："
                 android:id="@+id/textView9"
                 android:layout_column="0"
-                android:textSize="25dp" />
-
+                android:textSize="25dp"
+                android:textColor="#000000" />
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:id="@+id/qk_name"
-                android:layout_column="8" />
+                android:textSize="25dp"
+                android:layout_above="@+id/qk_PS"
+                android:layout_toRightOf="@+id/textView8"
+                android:layout_alignRight="@+id/qk_time"
+                android:layout_alignEnd="@+id/qk_time"
+                android:layout_column="8"
+                android:id="@+id/name22" />
         </TableRow>
 
         <TableRow
@@ -91,7 +100,8 @@
                 android:layout_alignTop="@+id/qk_reson"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_column="0" />
+                android:layout_column="0"
+                android:textColor="#000000" />
 
             <EditText
                 android:layout_width="wrap_content"
@@ -161,7 +171,8 @@
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_column="0" />
+                android:layout_column="0"
+                android:textColor="#000000" />
 
             <EditText
                 android:id="@+id/qk_PS"
@@ -176,11 +187,11 @@
     </TableLayout>
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="確定"
+        android:layout_width="150dp"
+        android:layout_height="70dp"
         android:id="@+id/button2"
+        android:background="@drawable/sure"
         android:layout_below="@+id/tableLayout2"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="62dp" />
+        android:layout_marginTop="14dp" />
 </RelativeLayout>

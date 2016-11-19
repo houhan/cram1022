@@ -17,7 +17,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.example.user.cram1001.volleymgr.ContentTest;
+import com.example.user.cram1001.Adapter.ContentTest;
+import com.example.user.cram1001.Adapter.MyAdapter;
 import com.example.user.cram1001.volleymgr.NetworkManager;
 
 import org.json.JSONArray;

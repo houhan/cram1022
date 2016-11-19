@@ -32,5 +32,15 @@ public class Home_teacherActivity extends AppCompatActivity {
                 Home_teacherActivity.this.startActivity(intent);
             }
         });
+
+        Button buttonqk = (Button) findViewById(R.id.qkteacher);//取得按鈕
+        buttonqk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(Home_teacherActivity.this, Qk_teacherActivity.class);
+                Home_teacherActivity.this.startActivity(intent);
+            }
+        });
     }
 }
