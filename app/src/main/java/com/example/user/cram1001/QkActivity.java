@@ -24,14 +24,19 @@ public class QkActivity extends AppCompatActivity {
     private EditText DateInput,NameInput,ResonInput,PSInput;
     private TextView USERname;
     private String UNAME;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qk);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);//回前頁
 
+
         Intent intent = this.getIntent();
+
         UNAME = intent.getStringExtra("UNAME");
+        intent.putExtra("UNAME", UNAME);
+
 
         USERname = (TextView) findViewById(R.id.name22);
         USERname.setText(UNAME);

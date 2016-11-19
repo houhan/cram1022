@@ -20,6 +20,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+
 import com.example.user.cram1001.Adapter.ContentCheck;
 import com.example.user.cram1001.Adapter.MyAdapterCheck;
 import com.example.user.cram1001.volleymgr.NetworkManager;
@@ -44,25 +45,25 @@ public class CheckActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // setContentView(R.layout.activity_check);
+        // setContentView(R.layout.activity_check);
         setContentView(R.layout.list_check);
 
-        Button notifibutton = (Button) findViewById(R.id.notifi);
-        notifibutton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-
-            }
-        });
-
-       Button checkbutton = (Button) findViewById(R.id.btn);
-        checkbutton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-               // tv1.setText("HI");
-                ContentCheck chk = (ContentCheck) myAdapter.getItem(1);
-                chk.textcheck = "HELLO";
-                myAdapter.notifyDataSetChanged();
-            }
-        });
+//        Button notifibutton = (Button) findViewById(R.id.notifi);
+//        notifibutton.setOnClickListener(new View.OnClickListener(){
+//            public void onClick(View v){
+//
+//            }
+//        });
+//
+//        Button checkbutton = (Button) findViewById(R.id.btn);
+//        checkbutton.setOnClickListener(new View.OnClickListener(){
+//            public void onClick(View v){
+//                // tv1.setText("HI");
+//                ContentCheck chk = (ContentCheck) myAdapter.getItem(1);
+//                chk.textcheck = "HELLO";
+//                myAdapter.notifyDataSetChanged();
+//            }
+//        });
 
         StringRequest request = new StringRequest(Request.Method.GET, "https://cramschoollogin.herokuapp.com/api/querystudentname", mResponseListener, mErrorListener);
         NetworkManager.getInstance(this).request(null, request);
@@ -99,7 +100,7 @@ public class CheckActivity extends AppCompatActivity {
         @Override
         public void onResponse(String string) {
             Log.d("Response", string);
-           //contentTest=new ArrayList<ContentTest>();
+            //contentTest=new ArrayList<ContentTest>();
             try {
 
                 JSONArray ary = new JSONArray(string);

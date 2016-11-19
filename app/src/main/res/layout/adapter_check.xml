@@ -19,12 +19,6 @@
         android:id="@+id/checktext"
         android:layout_weight="0.04" />
 
-    <Button
-        android:text="通知"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/notifi"
-        android:layout_weight="0.04" />
     <!--
         <CheckBox
             android:layout_width="wrap_content"

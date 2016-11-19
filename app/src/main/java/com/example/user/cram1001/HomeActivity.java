@@ -26,8 +26,8 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
 import java.net.URLEncoder;
 
 public class HomeActivity extends AppCompatActivity {
-    private String UID,UUSER,UCLASS;
-    private TextView UIDtest,CLASS;
+    private String UID,UUSER,UCLASS,UNAME;
+    private TextView UIDtest,CLASS,UUNAME;
     private static final String TAG = "MyFirebaseIIDService";
     private ProgressDialog mProgressDialog;
     @Override
@@ -35,14 +35,20 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+
         Intent intent = this.getIntent();
+
+
+        UNAME = intent.getStringExtra("UNAME");
         UUSER = intent.getStringExtra("UUSER");
         UCLASS = intent.getStringExtra("UClass");
 
+
+
         //UNAME = intent.getStringExtra("UNAME");
 
-        UIDtest = (TextView) findViewById(R.id.UIDtest);
-        UIDtest.setText(UUSER);
+        UUNAME = (TextView) findViewById(R.id.UIDtest);
+        UUNAME.setText(UNAME);
         CLASS = (TextView) findViewById(R.id.Uclass);
         CLASS.setText(UCLASS);
 
@@ -70,9 +76,10 @@ public class HomeActivity extends AppCompatActivity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(HomeActivity.this,QkActivity.class);
-                HomeActivity.this.startActivity(intent);
+                Intent intent = new Intent(HomeActivity.this, QkActivity.class);
+                intent.setClass(HomeActivity.this, QkActivity.class);
+                intent.putExtra("UNAME", UNAME);
+                startActivity(intent);
             }
         });
 

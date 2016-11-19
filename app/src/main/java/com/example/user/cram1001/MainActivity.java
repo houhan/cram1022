@@ -267,15 +267,15 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
             intent.setClass(MainActivity.this, HomeActivity.class);
             intent.putExtra("UUSER", UUSER);
+            intent.putExtra("UNAME", UNAME);
+            intent.putExtra("UClass", UClass);
 
-                intent.putExtra("UClass", UClass);
-            Intent intent2 = new Intent(MainActivity.this, QkActivity.class);
-            intent2.setClass(MainActivity.this, QkActivity.class);
-                intent.putExtra("UNAME", UNAME);
-                intent2.putExtra("UNAME", UNAME);
-                Intent intent3 = new Intent(MainActivity.this, HomeActivity.class);
-                intent3.setClass(MainActivity.this, HomeActivity.class);
-                intent3.putExtra("UClass", UClass);
+//            Intent intent2 = new Intent(MainActivity.this, HomeActivity.class);
+//            intent2.setClass(MainActivity.this, HomeActivity.class);
+//            intent2.putExtra("UNAME", UNAME);
+//            Intent intent3 = new Intent(MainActivity.this, HomeActivity.class);
+//            intent3.setClass(MainActivity.this, HomeActivity.class);
+//            intent3.putExtra("UClass", UClass);
 
 
 
