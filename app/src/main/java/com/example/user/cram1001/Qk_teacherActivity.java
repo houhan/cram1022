@@ -97,7 +97,7 @@ public class Qk_teacherActivity extends AppCompatActivity {
                     String name = json.getString("name");
                     String date = json.getString("date");
                     String reason = json.getString("reson");
-                    String ps = json.getString("PS");
+                    String ps = json.getString("ps");
                     ContentQk contentQ = new ContentQk(name, date, reason, ps);
                     contentQk.add(contentQ);
                 }

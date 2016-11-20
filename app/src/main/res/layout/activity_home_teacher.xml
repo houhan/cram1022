@@ -10,18 +10,21 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.user.cram1001.Home_teacherActivity"
     android:background="@drawable/background">
+
     <ScrollView android:id="@+id/contencrollView"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentTop="true"
+        android:scrollbars="none">
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true">
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
 
             <Button
                 android:layout_width="match_parent"
@@ -59,10 +62,10 @@
             <Button
                 android:layout_width="match_parent"
                 android:id="@+id/scheduleteacher"
-                android:layout_alignTop="@+id/Catch"
+                android:layout_alignTop="@+id/creat"
                 android:layout_alignParentEnd="true"
-                android:background="@drawable/schedule"
-                android:layout_height="110dp" />
+                android:background="@drawable/creat"
+                android:layout_height="100dp" />
 
             <Button
                 android:text="123"

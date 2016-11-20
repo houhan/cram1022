@@ -74,15 +74,15 @@ public class MainActivity extends AppCompatActivity {
 
         Button buttontest = (Button) findViewById(R.id.create);//取得按鈕
       // buttontest.setOnClickListener(TestListener);
-        buttontest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(MainActivity.this, CreateMemberActivity.class);
-                MainActivity.this.startActivity(intent);
-
-            }
-        });//將這個Listener綑綁在這個Button
+//        buttontest.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent();
+//                intent.setClass(MainActivity.this, CreateMemberActivity.class);
+//                MainActivity.this.startActivity(intent);
+//
+//            }
+//        });//將這個Listener綑綁在這個Button
 
         Button LogInButton = (Button) findViewById(R.id.button);
 
@@ -155,9 +155,17 @@ public class MainActivity extends AppCompatActivity {
         });
         LogInButton.setOnClickListener(LogInListener);
 
+//        buttontest.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View view)
+//            {
+//
+//            }
+//        });
+        buttontest.setOnClickListener(TestListener);
     }
     private View.OnClickListener LogInListener = new View.OnClickListener() {
-
         public void onClick(View v) {
                 try {
                     String strAccount = URLEncoder.encode(AccountInput.getEditableText().toString(), "UTF-8");
@@ -171,7 +179,6 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-
     };
 
     protected Response.Listener<String> AccountSuccessListener = new Response.Listener<String>() {
@@ -190,21 +197,16 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject obj = array.getJSONObject(i);
                     user = obj.getString("user");
 
-
                     if (user.equals("1")) {
                         String url = "https://cramschoollogin.herokuapp.com/api/query?user=" + strAccount ;
                         StringRequest request = new StringRequest(Request.Method.GET, url, LoginSuccessListener, LoginErrorListener);
                         NetworkManager.getInstance(MainActivity.this).request(null, request);
                     }
-
-
                     else
                     {
                         mProgressDialog.dismiss();
                         oProgressDialog.show();
                     }
-
-
                 }
 
             } catch (JSONException e1) {
@@ -258,9 +260,7 @@ public class MainActivity extends AppCompatActivity {
 
                 startActivity(intent);
 
-
             }
-
           else if (DataPassword.equals(strPassword))
             {
 
@@ -277,12 +277,8 @@ public class MainActivity extends AppCompatActivity {
 //            intent3.setClass(MainActivity.this, HomeActivity.class);
 //            intent3.putExtra("UClass", UClass);
 
-
-
-
             startActivity(intent);
             }
-
 
             else {
                 nProgressDialog.show();
@@ -290,7 +286,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
-
 
     public static String md5(String str)
     {
@@ -344,76 +339,42 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-   /* private SendGCM ()
-    {
-        String BrowserAPIKey = "這裡請輸入剛剛申請的API Key";
-        String message = "這裡請輸入您所要傳送的訊息";
-        String tickerText = "example test GCM";
-        String contentTitle = "content title GCM";
-        String postData = "{ \"registration_ids\": [ \"" + 這裡請填入要傳送的裝置ID + "\" ], \"data\": {\"tickerText\":\"" + tickerText + "\", \"contentTitle\":\"" + contentTitle + "\", \"message\": \"" + message + "\"}}";
-        String response = SendGCMNotification(BrowserAPIKey, postData);
-        String reponse = response;
-    }
-    private String SendGCMNotification(String apiKey, String postData, String postDataContentType = "application/json")
-    {
-        ServicePointManager.ServerCertificateValidationCallback += new RemoteCertificateValidationCallback(ValidateServerCertificate);
+    private View.OnClickListener TestListener = new View.OnClickListener() {
+        private String tokenid  = "c0EoHAyXYYM:APA91bF6r0lG4UsND-mgc-CxhbJiG9INtI231c9wcEEWA7OA5WDJ7KyheIANwjwe-0njBAQku0VRkaztoytjuFneQ8It4khI_t8gDS1OY6gtamMbCKI7WqlLnhiNdaUN3VzfFH8shFzi";
+        private String msg1  = "HELLO";
+        private String title1 = "安心班";
+        public void onClick(View v) {
+            try {
 
-        //  MESSAGE CONTENT
-        byte[] byteArray = Xml.Encoding.UTF8.GetBytes(postData);
-
-        //  CREATE REQUEST
-        HttpWebRequest Request = (HttpWebRequest)WebRequest.Create("https://android.googleapis.com/gcm/send");
-        Request.Method = "POST";
-        Request.KeepAlive = false;
-        Request.ContentType = postDataContentType;
-        Request.Headers.Add(string.Format("Authorization: key={0}", apiKey));
-        Request.ContentLength = byteArray.Length;
-
-        Stream dataStream = Request.GetRequestStream();
-        dataStream.Write(byteArray, 0, byteArray.Length);
-        dataStream.Close();
-
-        //  SEND MESSAGE
-        string error;
-        try
-        {
-            WebResponse Response = Request.GetResponse();
-            HttpStatusCode ResponseCode = ((HttpWebResponse)Response).StatusCode;
-            if (ResponseCode.Equals(HttpStatusCode.Unauthorized) || ResponseCode.Equals(HttpStatusCode.Forbidden))
-            {
-                error = "Unauthorized - need new token";
-
+                String tokens = URLEncoder.encode(tokenid.toString(), "UTF-8");
+                String msg = URLEncoder.encode(msg1.toString(), "UTF-8");
+                String title = URLEncoder.encode(title1.toString(), "UTF-8");
+                String url = "https://cramschoollogin.herokuapp.com/api/send?tokens=" + tokens + "&msg=" + msg +"&title=" + title;
+                StringRequest request = new StringRequest(Request.Method.POST, url, SendFcmSuccessListener, SendFcmErrorListener);
+                NetworkManager.getInstance(MainActivity.this).request(null, request);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
             }
-            else if (!ResponseCode.Equals(HttpStatusCode.OK))
-            {
-                error = "Response from web service isn't OK";
-            }
-
-            StreamReader Reader = new StreamReader(Response.GetResponseStream());
-            string responseLine = Reader.ReadToEnd();
-            Reader.Close();
-
-            return responseLine;
         }
-        catch (Exception e)
-        {
-            error = e.ToString();
+    };
+    protected Response.Listener<String> SendFcmSuccessListener = new Response.Listener<String>() {
+
+        @Override
+        public void onResponse(String response) {
+            mProgressDialog.dismiss();
+
+            Toast.makeText(MainActivity.this, "新增成功", Toast.LENGTH_LONG).show();
+
         }
-        return error;
-    }
+    };
 
-    public static bool ValidateServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
-    {
-        return true;
+    protected Response.ErrorListener SendFcmErrorListener = new Response.ErrorListener() {
 
-
-    }*/
-//    private View.OnClickListener TestListener = new View.OnClickListener() {
-//
-//        public void onClick(View v) {
-//
-//        }
-//
-//    };
+        @Override
+        public void onErrorResponse(VolleyError err) {
+            mProgressDialog.dismiss();
+            Toast.makeText(MainActivity.this, "Err " + err.toString(), Toast.LENGTH_LONG).show();
+        }
+    };
 
 }
