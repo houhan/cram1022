@@ -7,11 +7,19 @@ import android.view.View;
 import android.widget.Button;
 
 public class Home_teacherActivity extends AppCompatActivity {
+    private String UClass,UNAME,UUSER;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_teacher);
+
+        Intent intent = this.getIntent();
+
+        UClass = intent.getStringExtra("UClass");
+        UNAME = intent.getStringExtra("UNAME");
+        UUSER = intent.getStringExtra("UUSER");
 
         Button buttonbillboardteacher = (Button) findViewById(R.id.billboardteacher);//取得按鈕
         buttonbillboardteacher.setOnClickListener(new View.OnClickListener() {
@@ -29,7 +37,10 @@ public class Home_teacherActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(Home_teacherActivity.this, CheckActivity.class);
-                Home_teacherActivity.this.startActivity(intent);
+                intent.putExtra("UNAME", UNAME);
+                intent.putExtra("UClass", UClass);
+                intent.putExtra("UUSER", UUSER);
+                startActivity(intent);
             }
         });
 

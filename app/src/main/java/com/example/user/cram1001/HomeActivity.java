@@ -104,6 +104,10 @@ public class HomeActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setClass(HomeActivity.this, CheckActivity.class);
                 HomeActivity.this.startActivity(intent);
+                intent.putExtra("UNAME", UNAME);
+                intent.putExtra("UClass", UCLASS);
+                startActivity(intent);
+
             }
         });
 

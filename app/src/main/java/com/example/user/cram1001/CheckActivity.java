@@ -41,7 +41,7 @@ public class CheckActivity extends AppCompatActivity {
     private MyAdapterCheck myAdapter;
     private Button checkbutton;
     private TextView tv1,UUClass;
-    private String UClass;
+    private String UClass,UNAME,UUSER;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +64,12 @@ public class CheckActivity extends AppCompatActivity {
 //                myAdapter.notifyDataSetChanged();
 //            }
 //        });
+        Intent intent = this.getIntent();
+        UClass = intent.getStringExtra("UClass");
+        UNAME = intent.getStringExtra("UNAME");
+        UUSER = intent.getStringExtra("UUSER");
+        UUClass = (TextView) findViewById(R.id.textView23);
+        UUClass.setText(UUSER);
 
         StringRequest request = new StringRequest(Request.Method.GET, "https://cramschoollogin.herokuapp.com/api/querystudentname", mResponseListener, mErrorListener);
         NetworkManager.getInstance(this).request(null, request);
@@ -205,31 +211,64 @@ public class CheckActivity extends AppCompatActivity {
 
                 //mCheckBox.setChecked(false);
                 //mCheckBox1.setChecked(false);
-                switch (minor) {
-                    case 10:
-                        ContentCheck chk = (ContentCheck) myAdapter.getItem(0);
-                        chk.textcheck = "ARRIVE";
-                        myAdapter.notifyDataSetChanged();
-                        break;
-                    case 13:
-                        ContentCheck chk1 = (ContentCheck) myAdapter.getItem(1);
-                        chk1.textcheck = "ARRIVE";
-                        myAdapter.notifyDataSetChanged();
-                        break;
-                    case 12:
-                        ContentCheck chk2 = (ContentCheck) myAdapter.getItem(2);
-                        chk2.textcheck = "ARRIVE";
-                        myAdapter.notifyDataSetChanged();
-                        break;
-                    case 8:
-                        ContentCheck chk3 = (ContentCheck) myAdapter.getItem(3);
-                        chk3.textcheck = "ARRIVE";
-                        myAdapter.notifyDataSetChanged();
-                        break;
-                    default:
-                        break;
+                if(UClass.equals("向日葵班"))
+                {
+                    switch (minor) {
+                        case 10:
+                            ContentCheck chk = (ContentCheck) myAdapter.getItem(0);
+                            chk.textcheck = "ARRIVE";
+                            myAdapter.notifyDataSetChanged();
+                            break;
+                        case 13:
+                            ContentCheck chk1 = (ContentCheck) myAdapter.getItem(1);
+                            chk1.textcheck = "ARRIVE";
+                            myAdapter.notifyDataSetChanged();
+                            break;
+                        case 12:
+                            ContentCheck chk2 = (ContentCheck) myAdapter.getItem(2);
+                            chk2.textcheck = "ARRIVE";
+                            myAdapter.notifyDataSetChanged();
+                            break;
+                        case 8:
+                            ContentCheck chk3 = (ContentCheck) myAdapter.getItem(3);
+                            chk3.textcheck = "ARRIVE";
+                            myAdapter.notifyDataSetChanged();
+                            break;
+                        default:
+                            break;
+                    }
                 }
-
+                else if(UClass.equals("玫瑰班"))
+                {
+                    switch (minor) {
+                        case 10:
+                            ContentCheck chk = (ContentCheck) myAdapter.getItem(0);
+                            chk.textcheck = "ARRIVE";
+                            myAdapter.notifyDataSetChanged();
+                            break;
+                        case 13:
+                            ContentCheck chk1 = (ContentCheck) myAdapter.getItem(1);
+                            chk1.textcheck = "ARRIVE";
+                            myAdapter.notifyDataSetChanged();
+                            break;
+                        case 12:
+                            ContentCheck chk2 = (ContentCheck) myAdapter.getItem(2);
+                            chk2.textcheck = "ARRIVE";
+                            myAdapter.notifyDataSetChanged();
+                            break;
+                        case 8:
+                            ContentCheck chk3 = (ContentCheck) myAdapter.getItem(3);
+                            chk3.textcheck = "ARRIVE";
+                            myAdapter.notifyDataSetChanged();
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else
+                {
+                    UUClass.setText("12345");
+                };
 
 
             }

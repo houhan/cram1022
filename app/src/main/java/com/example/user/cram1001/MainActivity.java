@@ -49,21 +49,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-/*
-        if(checkLogIn()){  //判斷是否登入過，有的話就會直接登入
-            String getAccount = getConfig(MainActivity.this,
-                    "Config",
-                    "SaveAccount",
-                    "");
-            String getPass = getConfig(MainActivity.this,
-                    "Config",
-                    "SavePass",
-                    "");
-            AccountInput.setText(getAccount);
-            PasswordInput.setText(getPass);
-            getAccount();
-        }
-*/
+
         AccountInput = (EditText) findViewById(R.id.editID);
         PasswordInput = (EditText) findViewById(R.id.editPWD);
 
@@ -74,15 +60,15 @@ public class MainActivity extends AppCompatActivity {
 
         Button buttontest = (Button) findViewById(R.id.create);//取得按鈕
       // buttontest.setOnClickListener(TestListener);
-//        buttontest.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent();
-//                intent.setClass(MainActivity.this, CreateMemberActivity.class);
-//                MainActivity.this.startActivity(intent);
-//
-//            }
-//        });//將這個Listener綑綁在這個Button
+        buttontest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, Home_teacherActivity.class);
+                MainActivity.this.startActivity(intent);
+
+            }
+        });//將這個Listener綑綁在這個Button
 
         Button LogInButton = (Button) findViewById(R.id.button);
 
@@ -163,7 +149,8 @@ public class MainActivity extends AppCompatActivity {
 //
 //            }
 //        });
-        buttontest.setOnClickListener(TestListener);
+
+      //  buttontest.setOnClickListener(TestListener);
     }
     private View.OnClickListener LogInListener = new View.OnClickListener() {
         public void onClick(View v) {
@@ -171,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
                     String strAccount = URLEncoder.encode(AccountInput.getEditableText().toString(), "UTF-8");
 
                     mProgressDialog.show();
-
+                    //String url = "https://cramtest.herokuapp.com/api/checkaccount?user=" + strAccount;
                     String url = "https://cramschoollogin.herokuapp.com/api/checkaccount?user=" + strAccount;
                     StringRequest request = new StringRequest(Request.Method.GET, url, AccountSuccessListener, AccountErrorListener);
                     NetworkManager.getInstance(MainActivity.this).request(null, request);
@@ -257,6 +244,9 @@ public class MainActivity extends AppCompatActivity {
                 mProgressDialog.dismiss();
                 Intent intent = new Intent(MainActivity.this, Home_teacherActivity.class);
                 intent.setClass(MainActivity.this, Home_teacherActivity.class);
+                intent.putExtra("UUSER", UUSER);
+                intent.putExtra("UNAME", UNAME);
+                intent.putExtra("UClass", UClass);
 
                 startActivity(intent);
 
@@ -339,42 +329,6 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    private View.OnClickListener TestListener = new View.OnClickListener() {
-        private String tokenid  = "c0EoHAyXYYM:APA91bF6r0lG4UsND-mgc-CxhbJiG9INtI231c9wcEEWA7OA5WDJ7KyheIANwjwe-0njBAQku0VRkaztoytjuFneQ8It4khI_t8gDS1OY6gtamMbCKI7WqlLnhiNdaUN3VzfFH8shFzi";
-        private String msg1  = "HELLO";
-        private String title1 = "安心班";
-        public void onClick(View v) {
-            try {
 
-                String tokens = URLEncoder.encode(tokenid.toString(), "UTF-8");
-                String msg = URLEncoder.encode(msg1.toString(), "UTF-8");
-                String title = URLEncoder.encode(title1.toString(), "UTF-8");
-                String url = "https://cramschoollogin.herokuapp.com/api/send?tokens=" + tokens + "&msg=" + msg +"&title=" + title;
-                StringRequest request = new StringRequest(Request.Method.POST, url, SendFcmSuccessListener, SendFcmErrorListener);
-                NetworkManager.getInstance(MainActivity.this).request(null, request);
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-        }
-    };
-    protected Response.Listener<String> SendFcmSuccessListener = new Response.Listener<String>() {
-
-        @Override
-        public void onResponse(String response) {
-            mProgressDialog.dismiss();
-
-            Toast.makeText(MainActivity.this, "新增成功", Toast.LENGTH_LONG).show();
-
-        }
-    };
-
-    protected Response.ErrorListener SendFcmErrorListener = new Response.ErrorListener() {
-
-        @Override
-        public void onErrorResponse(VolleyError err) {
-            mProgressDialog.dismiss();
-            Toast.makeText(MainActivity.this, "Err " + err.toString(), Toast.LENGTH_LONG).show();
-        }
-    };
 
 }

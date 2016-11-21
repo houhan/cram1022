@@ -12,17 +12,18 @@
     android:background="@drawable/background">
 
 
-    <ListView
-        android:layout_above="@+id/btn"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/list2"
-        android:layout_alignParentBottom="true" />
-<Button
+    <Button
     android:id="@+id/btn"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:text="Press Here"
     android:layout_alignParentBottom="true"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/list2"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

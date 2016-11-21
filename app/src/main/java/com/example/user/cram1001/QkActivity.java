@@ -37,7 +37,6 @@ public class QkActivity extends AppCompatActivity {
         UNAME = intent.getStringExtra("UNAME");
         intent.putExtra("UNAME", UNAME);
 
-
         USERname = (TextView) findViewById(R.id.name22);
         USERname.setText(UNAME);
         //bData.putString("date", qk_time.getText().toString())
@@ -63,11 +62,11 @@ public class QkActivity extends AppCompatActivity {
                 //螢幕擷取三項資料後上傳DB
                 {
                     String strDate = URLEncoder.encode(DateButton.getText().toString(), "UTF-8");
-                    String strName = URLEncoder.encode(USERname.getEditableText().toString(), "UTF-8");
+                    String strName = URLEncoder.encode(UNAME.toString(), "UTF-8");
                     String strReson = URLEncoder.encode(ResonInput.getEditableText().toString(), "UTF-8");
                     String strPS = URLEncoder.encode(PSInput.getEditableText().toString(), "UTF-8");
 
-                    String url = "https://cramschoollogin.herokuapp.com/api/insertqk?name=" + strName + "&date=" + strDate + "&reson=" + strReson + "&PS=" + strPS;
+                    String url = "https://cramschoollogin.herokuapp.com/api/insertqk?name=" + strName + "&date=" + strDate + "&reson=" + strReson + "&ps=" + strPS;
                     StringRequest request = new StringRequest(Request.Method.GET, url, mOnAddSuccessListener, mOnErrorListener);
                     NetworkManager.getInstance(QkActivity.this).request(null, request);
                 }
@@ -92,20 +91,18 @@ public class QkActivity extends AppCompatActivity {
     }
 
     protected Response.Listener<String> mOnAddSuccessListener = new Response.Listener<String>() {
-
         @Override
         public void onResponse(String response) {
-
-            DateInput.setText("");
-//            NameInput.setText("");
-            ResonInput.setText("");
-            PSInput.setText("");
+//            DateInput.setText("");
+//            USERname.setText("");
+////            NameInput.setText("");
+//            ResonInput.setText("");
+//            PSInput.setText("");
 
             Toast.makeText(QkActivity.this, "假單已送出", Toast.LENGTH_LONG).show();
 
             //結束頁面
             QkActivity.this.finish();
-
         }
     };
 
@@ -118,12 +115,10 @@ public class QkActivity extends AppCompatActivity {
         }
     };
 
-
     //回前頁
     public void onBackPressed() {
         Intent intent = new Intent(this, HomeActivity.class);
         setResult(RESULT_OK, intent);
         finish();
     }
-
 }

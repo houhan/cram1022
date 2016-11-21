@@ -108,15 +108,17 @@ public class BillboardActivity extends AppCompatActivity {
             try {
 
                 JSONArray ary = new JSONArray(string);
+                StringBuilder ids = new StringBuilder();
                 StringBuilder dates = new StringBuilder();
                 StringBuilder titles = new StringBuilder();
                 StringBuilder contents = new StringBuilder();
                 for (int i = 0; i < ary.length(); i++) {
                     JSONObject json = ary.getJSONObject(i);
+                    String id = json.getString("_id");
                     String date = json.getString("date");
                     String title = json.getString("title");
                     String content = json.getString("content");
-                    ContentTest contentS = new ContentTest(date, title, content);
+                    ContentTest contentS = new ContentTest( date, title, content );
                     contentTest.add(contentS);
                 }
                 myAdapter.notifyDataSetChanged();

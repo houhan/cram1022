@@ -7,10 +7,12 @@ public class ContentTest {
     public String date="";
     public String title="";
     public String content="";
+    public String _id="";
 
     public  ContentTest(String nDate, String nTitle, String content){
         this.date=nDate;
         this.title=nTitle;
         this.content=content;
+
     }
 }
