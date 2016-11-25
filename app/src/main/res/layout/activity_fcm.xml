@@ -16,4 +16,14 @@
         android:layout_centerInParent="true"
         android:text="GCM Demo"
         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:text="Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="63dp"
+        android:id="@+id/fcmsend" />
+
 </RelativeLayout>

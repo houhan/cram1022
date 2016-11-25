@@ -81,7 +81,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.user.cram1001.HomeActivity" />
         </activity>
-        <activity android:name=".AddScheduleActivity" />
         <activity android:name=".CheckActivity" />
         <activity android:name=".attendanceActivity" />
         <activity android:name=".BeaconActivity" />

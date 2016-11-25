@@ -17,6 +17,7 @@ import java.util.ArrayList;
  */
 
 public class MyAdapterCheck extends BaseAdapter {
+
     private LayoutInflater myInflater;
     // CharSequence[] list = null;
     private ArrayList<ContentCheck> contentChecks;
@@ -55,6 +56,7 @@ public class MyAdapterCheck extends BaseAdapter {
             viewTag2 = new MyAdapterCheck.ViewTag2(
                     (TextView) convertView.findViewById(
                             R.id.name),
+                    (TextView) convertView.findViewById(R.id.studentclass),
                    (TextView) convertView.findViewById(R.id.checktext)
             );
 
@@ -65,7 +67,10 @@ public class MyAdapterCheck extends BaseAdapter {
         }
         ContentCheck contentCheck=contentChecks.get( position);
         viewTag2.name.setText(contentCheck.name);
+        viewTag2.room.setText(contentCheck.room);
+       // viewTag2.regid.setText(contentCheck.regid);
         viewTag2.textcheck.setText(contentCheck.textcheck);
+
 /*
         //設定內容圖案
         switch(position){
@@ -90,15 +95,19 @@ public class MyAdapterCheck extends BaseAdapter {
         mList.remove(index);
     }
 
-
     //自訂類別，表達個別listItem中的view物件集合。
     class ViewTag2 {
         TextView name;
+        TextView room;
+       // TextView regid;
         TextView textcheck;
 
 
-        public ViewTag2(TextView nname, TextView narrive) {
+
+        public ViewTag2(TextView nname,TextView nroom, TextView narrive) {
             this.name = nname;
+            this.room = nroom;
+           // this.regid = nregid;
             this.textcheck = narrive;
 
         }

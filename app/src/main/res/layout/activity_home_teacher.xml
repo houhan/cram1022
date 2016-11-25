@@ -62,7 +62,7 @@
 
             <Button
                 android:layout_width="match_parent"
-                android:id="@+id/scheduleteacher"
+                android:id="@+id/creatmember"
                 android:layout_alignTop="@+id/creat"
                 android:layout_alignParentEnd="true"
                 android:background="@drawable/creat"

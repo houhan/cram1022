@@ -229,7 +229,6 @@ public class MainActivity extends AppCompatActivity {
                     UUSER = obj.getString("user");
                     UClass = obj.getString("room");
 
-
                 }
             } catch (JSONException e1) {
                 e1.printStackTrace();

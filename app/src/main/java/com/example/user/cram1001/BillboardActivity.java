@@ -114,7 +114,7 @@ public class BillboardActivity extends AppCompatActivity {
                 StringBuilder contents = new StringBuilder();
                 for (int i = 0; i < ary.length(); i++) {
                     JSONObject json = ary.getJSONObject(i);
-                    String id = json.getString("_id");
+                    String _id = json.getString("_id");
                     String date = json.getString("date");
                     String title = json.getString("title");
                     String content = json.getString("content");

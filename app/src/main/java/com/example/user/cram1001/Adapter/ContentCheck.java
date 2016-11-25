@@ -6,10 +6,15 @@ package com.example.user.cram1001.Adapter;
 
 public class ContentCheck {
     public String name="";
+    public String room ="";
+    public String regid = "";
     public String textcheck ="";
 
-    public ContentCheck(String nname, String narrive) {
+
+    public ContentCheck(String nname, String nroom , String narrive) {
         this.name = nname;
+        this.room = nroom;
+        //this.regid = nregid;
         this.textcheck = narrive;
     }
 

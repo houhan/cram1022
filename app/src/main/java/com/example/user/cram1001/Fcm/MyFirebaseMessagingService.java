@@ -30,7 +30,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
         // 取得推播訊息 (記得server在發送推播時，要有subject這個項目，這裡才能取得)
-        String title = remoteMessage.getData().get("subject");
+        String title = remoteMessage.getData().get("title");
 
         // 取得訊息內文 (記得server在發送推播時，要有message這個項目，這裡才能取得)
         String message = remoteMessage.getData().get("message");

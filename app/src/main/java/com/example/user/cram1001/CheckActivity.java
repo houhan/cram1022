@@ -1,20 +1,24 @@
 package com.example.user.cram1001;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -23,12 +27,15 @@ import com.android.volley.toolbox.StringRequest;
 
 import com.example.user.cram1001.Adapter.ContentCheck;
 import com.example.user.cram1001.Adapter.MyAdapterCheck;
+import com.example.user.cram1001.Fcm.GCMUtils;
 import com.example.user.cram1001.volleymgr.NetworkManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 
@@ -41,35 +48,21 @@ public class CheckActivity extends AppCompatActivity {
     private MyAdapterCheck myAdapter;
     private Button checkbutton;
     private TextView tv1,UUClass;
-    private String UClass,UNAME,UUSER;
+    private String UClass,UNAME,UUSER,RRegid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // setContentView(R.layout.activity_check);
         setContentView(R.layout.list_check);
 
-//        Button notifibutton = (Button) findViewById(R.id.notifi);
-//        notifibutton.setOnClickListener(new View.OnClickListener(){
-//            public void onClick(View v){
-//
-//            }
-//        });
-//
-//        Button checkbutton = (Button) findViewById(R.id.btn);
-//        checkbutton.setOnClickListener(new View.OnClickListener(){
-//            public void onClick(View v){
-//                // tv1.setText("HI");
-//                ContentCheck chk = (ContentCheck) myAdapter.getItem(1);
-//                chk.textcheck = "HELLO";
-//                myAdapter.notifyDataSetChanged();
-//            }
-//        });
         Intent intent = this.getIntent();
         UClass = intent.getStringExtra("UClass");
         UNAME = intent.getStringExtra("UNAME");
         UUSER = intent.getStringExtra("UUSER");
-        UUClass = (TextView) findViewById(R.id.textView23);
-        UUClass.setText(UUSER);
+//        UUClass = (TextView) findViewById(R.id.textView23);
+//        UUClass.setText(UClass);
+//        Intent intent2 = this.getIntent();
+//        RRegid = intent2.getStringExtra("RRegid");
 
         StringRequest request = new StringRequest(Request.Method.GET, "https://cramschoollogin.herokuapp.com/api/querystudentname", mResponseListener, mErrorListener);
         NetworkManager.getInstance(this).request(null, request);
@@ -78,7 +71,7 @@ public class CheckActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listviewcheck);
         myAdapter = new MyAdapterCheck(this, contentCheck);
         listView.setAdapter(myAdapter);
-
+        listView.setOnItemLongClickListener(NotifiListener);
         //mHandler1.postDelayed(mDetectRunnable1, 30000);
 
         BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE); //宣告藍芽資訊接收管理
@@ -89,47 +82,127 @@ public class CheckActivity extends AppCompatActivity {
             startActivityForResult(enableBluetooth, 1);
         }
         mBluetoothAdapter.startLeScan(mLeScanCallback); //開始接收藍芽資訊
-        //Class顯示
-       /* Intent intent3 = this.getIntent();
-        UClass = intent3.getStringExtra("UClass");
-
-        UUClass = (TextView) findViewById(R.id.textView21);
-        UUClass.setText(UClass);*/
 
     }
 
     void fillData() {
     }
 
-    private Response.Listener<String> mResponseListener = new Response.Listener<String>() {
+    //    private Response.Listener<String> mResponseListener = new Response.Listener<String>() {
+//
+//        @Override
+//        public void onResponse(String response) {
+//           // Log.d("Response", string);
+//            //contentTest=new ArrayList<ContentTest>();
+//            try {
+//                JSONArray ary = new JSONArray(response);
+//                //JSONArray ary = new JSONArray(string);
+//                StringBuilder names = new StringBuilder();
+//                StringBuilder rooms = new StringBuilder();
+//
+//                for (int i = 0; i < ary.length(); i++) {
+//                    //JSONObject json = ary.getJSONObject(i);
+//                    JSONObject obj = ary.getJSONObject(i);
+//                    String name = obj.getString("name");
+//                    String room = obj.getString("room");
+//                    String Tokenid = obj.getString("regid");
+//                    ContentCheck contentC = new ContentCheck(name , room, "");
+//                    contentCheck.add(contentC);
+//                }
+//                myAdapter.notifyDataSetChanged();
+//
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    };.
 
-        @Override
-        public void onResponse(String string) {
-            Log.d("Response", string);
-            //contentTest=new ArrayList<ContentTest>();
-            try {
-
-                JSONArray ary = new JSONArray(string);
-                StringBuilder names = new StringBuilder();
-                for (int i = 0; i < ary.length(); i++) {
-                    JSONObject json = ary.getJSONObject(i);
-                    String name = json.getString("name");
-                    ContentCheck contentC = new ContentCheck(name,"");
-                    contentCheck.add(contentC);
-                }
-                myAdapter.notifyDataSetChanged();
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-    };
 
     private Response.ErrorListener mErrorListener = new Response.ErrorListener() {
 
         @Override
         public void onErrorResponse(VolleyError error) {
             Log.e("Error", error.toString());
+        }
+    };
+
+    protected Response.Listener<String> mResponseListener = new Response.Listener<String>() {
+        private String NName, RRoom, RRegid;
+
+        @Override
+        public void onResponse(String response) {
+
+            try {
+                JSONArray array = new JSONArray(response);
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject obj = array.getJSONObject(i);
+
+                    NName = obj.getString("name");
+                    RRoom = obj.getString("room");
+                    ContentCheck contentC = new ContentCheck(NName, RRoom, "");
+                    contentC.regid = obj.getString("regid");
+                    contentCheck.add(contentC);
+                }
+                myAdapter.notifyDataSetChanged();
+            } catch (JSONException e1) {
+                e1.printStackTrace();
+            }
+        }
+    };
+
+    private AdapterView.OnItemLongClickListener NotifiListener = new AdapterView.OnItemLongClickListener(){
+        public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+            final ContentCheck contentC = (ContentCheck) parent.getAdapter().getItem(position);
+            new AlertDialog.Builder(CheckActivity.this)
+                    .setMessage("是否通知家長?")
+                    .setPositiveButton("是", new DialogInterface.OnClickListener() {
+                        private String MSG;
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+//                                try {
+
+                            // String regid= "regid";
+                             // String strregid="cnCd2iNf2bY:APA91bFnSdYbiCf33YA4WEWPuJ2nRKqT68MqpXUoRyvrEjBKXwotp1Q3hg0SgzolqPNACyxEFzTUCn3865WXJH1LbAvqjapRqa-tvjw7ptfg7AWQJlgbHPKY08FNk1JVYNTqShHiTn8L";
+                           MSG="小孩已抵達安親班";
+                            //螢幕擷取三項資料後上傳DB
+                            //String strregid  = URLEncoder.encode(RRegid);
+                            // String strregid = URLEncoder.encode(RRegid.toString(), "UTF-8");
+                            String strmsg = URLEncoder.encode(MSG);
+                            //   String strtitle = URLEncoder.encode("HOUHAN".toString(), "UTF-8");
+                            //String token = RRegid.getstring(FcmActivity.this);
+                            String url = "https://cramschoollogin.herokuapp.com/api/sendfcm?to=" + contentC.regid +"&message" +strmsg ;
+                            StringRequest request = new StringRequest(Request.Method.GET, url, mOnAddSuccessListener, mOnErrorListener);
+                            NetworkManager.getInstance(CheckActivity.this).request(null, request);
+                        }
+                    })
+                    .setNegativeButton("否", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    })
+                    .show();
+
+            return false;
+        }
+    };
+
+    protected Response.Listener<String> mOnAddSuccessListener = new Response.Listener<String>() {
+
+        @Override
+        public void onResponse(String response) {
+
+            Toast.makeText(CheckActivity.this, "通知已送出", Toast.LENGTH_LONG).show();
+
+        }
+    };
+
+    protected Response.ErrorListener mOnErrorListener = new Response.ErrorListener() {
+
+        @Override
+        public void onErrorResponse(VolleyError err) {
+
+            Toast.makeText(CheckActivity.this, "Err " + err.toString(), Toast.LENGTH_LONG).show();
         }
     };
 
@@ -211,8 +284,7 @@ public class CheckActivity extends AppCompatActivity {
 
                 //mCheckBox.setChecked(false);
                 //mCheckBox1.setChecked(false);
-                if(UClass.equals("向日葵班"))
-                {
+
                     switch (minor) {
                         case 10:
                             ContentCheck chk = (ContentCheck) myAdapter.getItem(0);
@@ -237,38 +309,10 @@ public class CheckActivity extends AppCompatActivity {
                         default:
                             break;
                     }
-                }
-                else if(UClass.equals("玫瑰班"))
-                {
-                    switch (minor) {
-                        case 10:
-                            ContentCheck chk = (ContentCheck) myAdapter.getItem(0);
-                            chk.textcheck = "ARRIVE";
-                            myAdapter.notifyDataSetChanged();
-                            break;
-                        case 13:
-                            ContentCheck chk1 = (ContentCheck) myAdapter.getItem(1);
-                            chk1.textcheck = "ARRIVE";
-                            myAdapter.notifyDataSetChanged();
-                            break;
-                        case 12:
-                            ContentCheck chk2 = (ContentCheck) myAdapter.getItem(2);
-                            chk2.textcheck = "ARRIVE";
-                            myAdapter.notifyDataSetChanged();
-                            break;
-                        case 8:
-                            ContentCheck chk3 = (ContentCheck) myAdapter.getItem(3);
-                            chk3.textcheck = "ARRIVE";
-                            myAdapter.notifyDataSetChanged();
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                else
-                {
-                    UUClass.setText("12345");
-                };
+
+
+
+
 
 
             }
@@ -277,21 +321,8 @@ public class CheckActivity extends AppCompatActivity {
         }
     };
 
-
-
     static final char[] hexArray = "0123456789ABCDEF".toCharArray();
 
-    /*
-        //按鈕事件
-        public void button1_Click(View view) {
-
-            //顯示掃描結果
-            Toast.makeText(getApplicationContext(), "MAC：" + mac, Toast.LENGTH_SHORT).show();
-            //清除記憶值
-
-            mac ="沒有找到Beacon";
-        }
-    */
     private static String bytesToHex(byte[] bytes) {  //位元轉換
         char[] hexChars = new char[bytes.length * 2];
         for (int j = 0; j < bytes.length; j++) {

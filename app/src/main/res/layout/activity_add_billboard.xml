@@ -14,7 +14,9 @@
         android:layout_width="match_parent"
         android:layout_height="230dp"
         android:id="@+id/tableLayout"
-        android:padding="10dp">
+        android:paddingTop="35dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
 
         <TableRow
             android:layout_width="match_parent"
@@ -102,21 +104,12 @@
     </TableLayout>
 
     <Button
-        android:layout_width="170dp"
-        android:layout_height="wrap_content"
-        android:text="確定"
+        android:layout_height="70dp"
         android:id="@+id/buttonOK"
-        android:layout_marginTop="27dp"
+        android:layout_marginTop="45dp"
+        android:background="@drawable/sure"
+        android:layout_width="150dp"
         android:layout_below="@+id/tableLayout"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_centerHorizontal="true" />
 
-    <Button
-        android:layout_width="170dp"
-        android:layout_height="wrap_content"
-        android:text="取消"
-        android:id="@+id/buttonNo"
-        android:layout_alignTop="@+id/buttonOK"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
 </RelativeLayout>
