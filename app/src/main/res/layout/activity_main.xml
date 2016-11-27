@@ -76,14 +76,14 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
 
-    <Button
-        style="oval"
-        android:layout_width="120dp"
-        android:layout_height="70dp"
-        android:id="@+id/create"
-        android:alpha="100"
-        android:layout_alignParentBottom="true"
-        android:layout_toStartOf="@+id/button" />
+    <!--<Button-->
+        <!--style="oval"-->
+        <!--android:layout_width="120dp"-->
+        <!--android:layout_height="70dp"-->
+        <!--android:id="@+id/create"-->
+        <!--android:alpha="100"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_toStartOf="@+id/button" />-->
 
     <Button
         android:layout_height="70dp"

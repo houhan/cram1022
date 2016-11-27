@@ -38,15 +38,6 @@ public class BillboardActivity extends AppCompatActivity {
         StringRequest request = new StringRequest(Request.Method.GET, "https://cramschoollogin.herokuapp.com/api/querybillboard", mResponseListener, mErrorListener);
         NetworkManager.getInstance(this).request(null, request);
 
-       /* Button button = (Button) findViewById(R.id.buttonAdd);//取得按鈕
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(BillboardActivity.this, AddBillboardActivity.class);
-                startActivity(intent);
-            }
-        });//將這個Listener綑綁在這個Button  */
 
 
         //設定此Activity使用的res layout
@@ -61,39 +52,6 @@ public class BillboardActivity extends AppCompatActivity {
             }
         });
 
- /*       Button DeleteButton = (Button) findViewById(R.id.deletebb);
-        DeleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                StringRequest request = new StringRequest(Request.Method.GET, "https://cramschoollogin.herokuapp.com/api/delete2" , mOnDeleteSuccessListener, mOnErrorListener);
-                NetworkManager.getInstance(BillboardActivity.this).request(null, request);
-            }
-        });*/
-
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                new AlertDialog.Builder(BillboardActivity.this)
-                        .setTitle("want to delele?")
-                        .setMessage("Want to delete " + position + " item?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                myAdapter.removeItem(position);
-                                myAdapter.notifyDataSetChanged();
-                            }
-                        })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
-                        })
-                        .show();
-
-                return false;
-            }
-        });
     }
     void fillData() {
     }

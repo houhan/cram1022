@@ -34,7 +34,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
@@ -50,23 +49,19 @@ public class CheckActivity extends AppCompatActivity {
     private TextView tv1,UUClass;
     private String UClass,UNAME,UUSER,RRegid;
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // setContentView(R.layout.activity_check);
         setContentView(R.layout.list_check);
+//        mHandler1.postDelayed(mDetectRunnable1, 30000);
 
         Intent intent = this.getIntent();
         UClass = intent.getStringExtra("UClass");
         UNAME = intent.getStringExtra("UNAME");
         UUSER = intent.getStringExtra("UUSER");
-//        UUClass = (TextView) findViewById(R.id.textView23);
-//        UUClass.setText(UClass);
-//        Intent intent2 = this.getIntent();
-//        RRegid = intent2.getStringExtra("RRegid");
-
         StringRequest request = new StringRequest(Request.Method.GET, "https://cramschoollogin.herokuapp.com/api/querystudentname", mResponseListener, mErrorListener);
         NetworkManager.getInstance(this).request(null, request);
-
 
         listView = (ListView) findViewById(R.id.listviewcheck);
         myAdapter = new MyAdapterCheck(this, contentCheck);
@@ -84,39 +79,6 @@ public class CheckActivity extends AppCompatActivity {
         mBluetoothAdapter.startLeScan(mLeScanCallback); //開始接收藍芽資訊
 
     }
-
-    void fillData() {
-    }
-
-    //    private Response.Listener<String> mResponseListener = new Response.Listener<String>() {
-//
-//        @Override
-//        public void onResponse(String response) {
-//           // Log.d("Response", string);
-//            //contentTest=new ArrayList<ContentTest>();
-//            try {
-//                JSONArray ary = new JSONArray(response);
-//                //JSONArray ary = new JSONArray(string);
-//                StringBuilder names = new StringBuilder();
-//                StringBuilder rooms = new StringBuilder();
-//
-//                for (int i = 0; i < ary.length(); i++) {
-//                    //JSONObject json = ary.getJSONObject(i);
-//                    JSONObject obj = ary.getJSONObject(i);
-//                    String name = obj.getString("name");
-//                    String room = obj.getString("room");
-//                    String Tokenid = obj.getString("regid");
-//                    ContentCheck contentC = new ContentCheck(name , room, "");
-//                    contentCheck.add(contentC);
-//                }
-//                myAdapter.notifyDataSetChanged();
-//
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    };.
-
 
     private Response.ErrorListener mErrorListener = new Response.ErrorListener() {
 
@@ -156,25 +118,22 @@ public class CheckActivity extends AppCompatActivity {
             new AlertDialog.Builder(CheckActivity.this)
                     .setMessage("是否通知家長?")
                     .setPositiveButton("是", new DialogInterface.OnClickListener() {
-                        private String MSG;
+                        private String SStatus;
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-//                                try {
-
-                            // String regid= "regid";
-                             // String strregid="cnCd2iNf2bY:APA91bFnSdYbiCf33YA4WEWPuJ2nRKqT68MqpXUoRyvrEjBKXwotp1Q3hg0SgzolqPNACyxEFzTUCn3865WXJH1LbAvqjapRqa-tvjw7ptfg7AWQJlgbHPKY08FNk1JVYNTqShHiTn8L";
-                           MSG="小孩已抵達安親班";
-                            //螢幕擷取三項資料後上傳DB
-                            //String strregid  = URLEncoder.encode(RRegid);
-                            // String strregid = URLEncoder.encode(RRegid.toString(), "UTF-8");
-                            String strmsg = URLEncoder.encode(MSG);
-                            //   String strtitle = URLEncoder.encode("HOUHAN".toString(), "UTF-8");
-                            //String token = RRegid.getstring(FcmActivity.this);
-                            String url = "https://cramschoollogin.herokuapp.com/api/sendfcm?to=" + contentC.regid +"&message" +strmsg ;
+                           // String strmsg = URLEncoder.encode(MSG);
+                            String url = "https://cramschoollogin.herokuapp.com/api/sendfcm?to=" + contentC.regid;
                             StringRequest request = new StringRequest(Request.Method.GET, url, mOnAddSuccessListener, mOnErrorListener);
                             NetworkManager.getInstance(CheckActivity.this).request(null, request);
+
+                            SStatus = "小孩已安全安親班囉！";
+                            String strstatus = URLEncoder.encode(SStatus);
+                            String url2 = "https://cramschoollogin.herokuapp.com/api/insertstatus?regid=" + contentC.regid + "&sstatus=" + strstatus ;
+                            StringRequest request2 = new StringRequest(Request.Method.GET, url2, mOnAddSuccessListener, mOnErrorListener);
+                            NetworkManager.getInstance(CheckActivity.this).request(null, request2);
                         }
                     })
+
                     .setNegativeButton("否", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -185,47 +144,8 @@ public class CheckActivity extends AppCompatActivity {
 
             return false;
         }
-    };
-
-    protected Response.Listener<String> mOnAddSuccessListener = new Response.Listener<String>() {
-
-        @Override
-        public void onResponse(String response) {
-
-            Toast.makeText(CheckActivity.this, "通知已送出", Toast.LENGTH_LONG).show();
-
-        }
-    };
-
-    protected Response.ErrorListener mOnErrorListener = new Response.ErrorListener() {
-
-        @Override
-        public void onErrorResponse(VolleyError err) {
-
-            Toast.makeText(CheckActivity.this, "Err " + err.toString(), Toast.LENGTH_LONG).show();
-        }
-    };
-
-    private Handler mHandler = new Handler() {
 
     };
-    private Handler mHandler1 = new Handler() {
-
-    };
-
-    private Runnable mDetectRunnable = new Runnable() {  //監聽器
-
-        @SuppressLint("NewApi")
-        @Override
-        public void run() {
-            // TODO detect logic
-
-            mHandler.postDelayed(this,1000);
-        }
-
-    };
-
-
     private BluetoothAdapter.LeScanCallback mLeScanCallback = new BluetoothAdapter.LeScanCallback() {   //接收到藍芽資訊然後針對接收到的資料進行解析
         @Override
         public void onLeScan(final BluetoothDevice device, final int rssi,
@@ -285,41 +205,68 @@ public class CheckActivity extends AppCompatActivity {
                 //mCheckBox.setChecked(false);
                 //mCheckBox1.setChecked(false);
 
-                    switch (minor) {
-                        case 10:
-                            ContentCheck chk = (ContentCheck) myAdapter.getItem(0);
-                            chk.textcheck = "ARRIVE";
-                            myAdapter.notifyDataSetChanged();
-                            break;
-                        case 13:
-                            ContentCheck chk1 = (ContentCheck) myAdapter.getItem(1);
-                            chk1.textcheck = "ARRIVE";
-                            myAdapter.notifyDataSetChanged();
-                            break;
-                        case 12:
-                            ContentCheck chk2 = (ContentCheck) myAdapter.getItem(2);
-                            chk2.textcheck = "ARRIVE";
-                            myAdapter.notifyDataSetChanged();
-                            break;
-                        case 8:
-                            ContentCheck chk3 = (ContentCheck) myAdapter.getItem(3);
-                            chk3.textcheck = "ARRIVE";
-                            myAdapter.notifyDataSetChanged();
-                            break;
-                        default:
-                            break;
-                    }
-
-
-
-
-
-
+                switch (minor) {
+                    case 12:
+                        ContentCheck chk = (ContentCheck) myAdapter.getItem(0);
+                        chk.textcheck = "ARRIVE";
+                        myAdapter.notifyDataSetChanged();
+                        break;
+                    case 8:
+                        ContentCheck chk1 = (ContentCheck) myAdapter.getItem(1);
+                        chk1.textcheck = "ARRIVE";
+                        myAdapter.notifyDataSetChanged();
+                        break;
+                    case 10:
+                        ContentCheck chk2 = (ContentCheck) myAdapter.getItem(2);
+                        chk2.textcheck = "ARRIVE";
+                        myAdapter.notifyDataSetChanged();
+                        break;
+                    case 13:
+                        ContentCheck chk3 = (ContentCheck) myAdapter.getItem(3);
+                        chk3.textcheck = "ARRIVE";
+                        myAdapter.notifyDataSetChanged();
+                        break;
+                    default:
+                        break;
+                }
             }
 
 
         }
     };
+
+    protected Response.Listener<String> mOnAddSuccessListener = new Response.Listener<String>() {
+
+        @Override
+        public void onResponse(String response) {
+            Toast.makeText(CheckActivity.this, "通知已送出", Toast.LENGTH_LONG).show();
+        }
+    };
+
+    protected Response.ErrorListener mOnErrorListener = new Response.ErrorListener() {
+
+        @Override
+        public void onErrorResponse(VolleyError err) {
+            Toast.makeText(CheckActivity.this, "Err " + err.toString(), Toast.LENGTH_LONG).show();
+        }
+    };
+    private Handler mHandler = new Handler() {
+    };
+    private Handler mHandler1 = new Handler() {
+
+    };
+    private Runnable mDetectRunnable = new Runnable() {  //監聽器
+
+        @SuppressLint("NewApi")
+        @Override
+        public void run() {
+            // TODO detect logic
+            mHandler.postDelayed(this,1000);
+        }
+
+    };
+
+
 
     static final char[] hexArray = "0123456789ABCDEF".toCharArray();
 
@@ -345,5 +292,23 @@ public class CheckActivity extends AppCompatActivity {
             double accuracy = (0.89976) * Math.pow(ratio, 7.7095) + 0.111;
             return accuracy;
         }
-    }
+    };
+    //    private Runnable mDetectRunnable1 = new Runnable() {
+//        @Override
+//        public void run() {
+//
+//            // TODO detect logic
+//
+//            String SStatus;
+//            SStatus = "小孩尚未到達安全安親班囉111！";
+//            String sstrstatus = URLEncoder.encode(SStatus);
+//            String url3 = "https://cramschoollogin.herokuapp.com/api/insertstatus?regid=" + "&sstatus=" + sstrstatus ;
+//            StringRequest request3 = new StringRequest(Request.Method.GET, url3, mOnAddSuccessListener, mOnErrorListener);
+//            NetworkManager.getInstance(CheckActivity.this).request(null, request3);
+//            mHandler1.postDelayed(this,10000);
+//            Log.d("Delay","小孩尚未到達安全安親班囉11");
+//        }
+//
+//    };
+
 }

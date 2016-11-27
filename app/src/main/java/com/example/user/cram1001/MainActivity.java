@@ -57,18 +57,18 @@ public class MainActivity extends AppCompatActivity {
         String strUserName = AccountInput.getText().toString();
         String strPassword = PasswordInput.getText().toString();
         String strTeacher = PasswordInput.getText().toString();
-
-        Button buttontest = (Button) findViewById(R.id.create);//取得按鈕
-      // buttontest.setOnClickListener(TestListener);
-        buttontest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(MainActivity.this, Home_teacherActivity.class);
-                MainActivity.this.startActivity(intent);
-
-            }
-        });//將這個Listener綑綁在這個Button
+//
+//        Button buttontest = (Button) findViewById(R.id.create);//取得按鈕
+//        // buttontest.setOnClickListener(TestListener);
+//        buttontest.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent();
+//                intent.setClass(MainActivity.this, NotifigohomeActivity.class);
+//                MainActivity.this.startActivity(intent);
+//
+//            }
+//        });//將這個Listener綑綁在這個Button
 
         Button LogInButton = (Button) findViewById(R.id.button);
 
@@ -150,22 +150,22 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
-      //  buttontest.setOnClickListener(TestListener);
+        //  buttontest.setOnClickListener(TestListener);
     }
     private View.OnClickListener LogInListener = new View.OnClickListener() {
         public void onClick(View v) {
-                try {
-                    String strAccount = URLEncoder.encode(AccountInput.getEditableText().toString(), "UTF-8");
+            try {
+                String strAccount = URLEncoder.encode(AccountInput.getEditableText().toString(), "UTF-8");
 
-                    mProgressDialog.show();
-                    //String url = "https://cramtest.herokuapp.com/api/checkaccount?user=" + strAccount;
-                    String url = "https://cramschoollogin.herokuapp.com/api/checkaccount?user=" + strAccount;
-                    StringRequest request = new StringRequest(Request.Method.GET, url, AccountSuccessListener, AccountErrorListener);
-                    NetworkManager.getInstance(MainActivity.this).request(null, request);
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
+                mProgressDialog.show();
+                //String url = "https://cramtest.herokuapp.com/api/checkaccount?user=" + strAccount;
+                String url = "https://cramschoollogin.herokuapp.com/api/checkaccount?user=" + strAccount;
+                StringRequest request = new StringRequest(Request.Method.GET, url, AccountSuccessListener, AccountErrorListener);
+                NetworkManager.getInstance(MainActivity.this).request(null, request);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
             }
+        }
     };
 
     protected Response.Listener<String> AccountSuccessListener = new Response.Listener<String>() {
@@ -213,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
     protected Listener<String> LoginSuccessListener = new Listener<String>() {
-        private String DataPassword,UID,minor,UNAME,UUSER,UClass,UNAME2;
+        private String DataPassword,UID,minor,UNAME,UUSER,UClass,UStatus;
 
         @Override
         public void onResponse(String response) {
@@ -223,11 +223,12 @@ public class MainActivity extends AppCompatActivity {
                 for (int i = 0; i < array.length(); i++) {
                     JSONObject obj = array.getJSONObject(i);
                     DataPassword = obj.getString("password");
-                  //  minor = obj.getString("minor");
+                    //  minor = obj.getString("minor");
                     UID = obj.getString("_id");
                     UNAME = obj.getString("name");
                     UUSER = obj.getString("user");
                     UClass = obj.getString("room");
+                    UStatus = obj.getString("sstatus");
 
                 }
             } catch (JSONException e1) {
@@ -236,8 +237,8 @@ public class MainActivity extends AppCompatActivity {
                 mProgressDialog.dismiss();
             }
             //String strPassword = PasswordInput.getEditableText().toString();
-            String strPassword = md5(PasswordInput.getEditableText().toString());
-
+            //String strPassword = md5(PasswordInput.getEditableText().toString());
+            String strPassword = PasswordInput.getEditableText().toString();
             //將抓下來的密碼與輸入密碼比較
             if (DataPassword.equals(strPassword)&(UUSER.equals("teacher") || UUSER.equals("teacher2"))) {
                 mProgressDialog.dismiss();
@@ -250,15 +251,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
 
             }
-          else if (DataPassword.equals(strPassword))
+            else if (DataPassword.equals(strPassword))
             {
 
-            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-            intent.setClass(MainActivity.this, HomeActivity.class);
-            intent.putExtra("UUSER", UUSER);
-            intent.putExtra("UNAME", UNAME);
-            intent.putExtra("UClass", UClass);
-
+                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                intent.setClass(MainActivity.this, HomeActivity.class);
+                intent.putExtra("UUSER", UUSER);
+                intent.putExtra("UNAME", UNAME);
+                intent.putExtra("UClass", UClass);
+                intent.putExtra("UStatus", UStatus);
 //            Intent intent2 = new Intent(MainActivity.this, HomeActivity.class);
 //            intent2.setClass(MainActivity.this, HomeActivity.class);
 //            intent2.putExtra("UNAME", UNAME);
@@ -266,7 +267,7 @@ public class MainActivity extends AppCompatActivity {
 //            intent3.setClass(MainActivity.this, HomeActivity.class);
 //            intent3.putExtra("UClass", UClass);
 
-            startActivity(intent);
+                startActivity(intent);
             }
 
             else {
@@ -275,40 +276,40 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
-
-    public static String md5(String str)
-    {
-        MessageDigest md5 = null;
-        try
-        {
-            md5 = MessageDigest.getInstance("MD5");
-        }catch(Exception e)
-        {
-            e.printStackTrace();
-            return "";
-        }
-
-        char[] charArray = str.toCharArray();
-        byte[] byteArray = new byte[charArray.length];
-
-        for(int i = 0; i < charArray.length; i++)
-        {
-            byteArray[i] = (byte)charArray[i];
-        }
-        byte[] md5Bytes = md5.digest(byteArray);
-
-        StringBuffer hexValue = new StringBuffer();
-        for( int i = 0; i < md5Bytes.length; i++)
-        {
-            int val = ((int)md5Bytes[i])&0xff;
-            if(val < 16)
-            {
-                hexValue.append("0");
-            }
-            hexValue.append(Integer.toHexString(val));
-        }
-        return hexValue.toString();
-    }
+//
+//    public static String md5(String str)
+//    {
+//        MessageDigest md5 = null;
+//        try
+//        {
+//            md5 = MessageDigest.getInstance("MD5");
+//        }catch(Exception e)
+//        {
+//            e.printStackTrace();
+//            return "";
+//        }
+//
+//        char[] charArray = str.toCharArray();
+//        byte[] byteArray = new byte[charArray.length];
+//
+//        for(int i = 0; i < charArray.length; i++)
+//        {
+//            byteArray[i] = (byte)charArray[i];
+//        }
+//        byte[] md5Bytes = md5.digest(byteArray);
+//
+//        StringBuffer hexValue = new StringBuffer();
+//        for( int i = 0; i < md5Bytes.length; i++)
+//        {
+//            int val = ((int)md5Bytes[i])&0xff;
+//            if(val < 16)
+//            {
+//                hexValue.append("0");
+//            }
+//            hexValue.append(Integer.toHexString(val));
+//        }
+//        return hexValue.toString();
+//    }
 
 
     protected ErrorListener LoginErrorListener = new ErrorListener() {

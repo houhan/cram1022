@@ -107,7 +107,8 @@
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"></activity>
         -->
-        <activity android:name=".Qk_teacherActivity"></activity>
+        <activity android:name=".Qk_teacherActivity" />
+        <activity android:name=".NotifigohomeActivity"></activity>
     </application>
 
 </manifest>

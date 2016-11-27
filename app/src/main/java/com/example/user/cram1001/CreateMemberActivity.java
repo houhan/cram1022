@@ -77,20 +77,23 @@ public class CreateMemberActivity extends AppCompatActivity {
     ///////////////////////////////////////////////////////////////////////////////////
     */
     private View.OnClickListener CreateMemberListener = new View.OnClickListener() {
-
+        private String AddRegid,AddStatus;
         public void onClick(View v) {
 
             try {
-
+                AddRegid = "0";
+                AddStatus = "孩子尚未抵達安親班唷";
                 //螢幕擷取三項資料後上傳DB
                 String strAccount = URLEncoder.encode(AccountInput.getEditableText().toString(), "UTF-8");
                 String strPassword = URLEncoder.encode(PasswordInput.getEditableText().toString(), "UTF-8");
                 String strName = URLEncoder.encode(NameInput.getEditableText().toString(), "UTF-8");
                 String strminor = URLEncoder.encode(MinorInput.getEditableText().toString(), "UTF-8");
                 String strclass = URLEncoder.encode(ClassInput.getEditableText().toString(), "UTF-8");
+                String strregid = URLEncoder.encode(AddRegid.toString(), "UTF-8");
+                String strstatus = URLEncoder.encode(AddStatus.toString(), "UTF-8");
                 mProgressDialog.show();
 
-                String url = "https://cramschoollogin.herokuapp.com/api/insert?user=" + strAccount + "&password=" + strPassword +  "&name=" + strName + "&minor=" + strminor +"&room=" + strclass;
+                String url = "https://cramschoollogin.herokuapp.com/api/insert?user=" + strAccount + "&password=" + strPassword +  "&name=" + strName + "&minor=" + strminor +"&room=" + strclass + "&regid=" + strregid + "&status=" + strstatus;
                 StringRequest request = new StringRequest(Request.Method.GET, url, mOnAddSuccessListener, mOnErrorListener);
                 NetworkManager.getInstance(CreateMemberActivity.this).request(null, request);
             } catch (UnsupportedEncodingException e) {

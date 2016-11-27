@@ -12,6 +12,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,7 +48,17 @@ public class Billboard_teacherActivity extends AppCompatActivity {
         mProgressDialog.setMessage("Wait...");
 
         queryTodoList();
-      ;
+
+
+        Button button = (Button) findViewById(R.id.buttonaddbill);//取得按鈕
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(Billboard_teacherActivity.this, AddBillboardActivity.class);
+                startActivity(intent);
+            }
+        });//將這個Listener綑綁在這個Button
 
 
     }

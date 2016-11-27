@@ -8,6 +8,23 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.user.cram1001.CheckParentsActivity">
+    tools:context="com.example.user.cram1001.CheckParentsActivity"
+    android:background="@drawable/background">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/CID"
+        android:textSize="30sp"
+        android:textColor="#000000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
+        android:textColor="#000000"
+        android:textSize="32sp"
+        android:id="@+id/status"
+        android:layout_below="@+id/CID"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

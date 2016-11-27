@@ -48,7 +48,7 @@ public class MyAdapterQk extends BaseAdapter {
 
         if (convertView == null) {
             //取得listItem容器 view
-            convertView = myInflater.inflate(R.layout.adapter_qk, null);
+            convertView = myInflater.inflate(R.layout.adapter_qk,null);
 
             //建構listItem內容view
             viewTag3 = new MyAdapterQk.ViewTag3(

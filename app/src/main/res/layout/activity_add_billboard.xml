@@ -12,11 +12,12 @@
     android:background="@drawable/background">
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="230dp"
         android:id="@+id/tableLayout"
         android:paddingTop="35dp"
         android:paddingLeft="20dp"
-        android:paddingRight="20dp">
+        android:paddingRight="20dp"
+        android:layout_height="500dp"
+        android:background="@drawable/shape">
 
         <TableRow
             android:layout_width="match_parent"
@@ -106,10 +107,10 @@
     <Button
         android:layout_height="70dp"
         android:id="@+id/buttonOK"
-        android:layout_marginTop="45dp"
         android:background="@drawable/sure"
         android:layout_width="150dp"
-        android:layout_below="@+id/tableLayout"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="56dp" />
 
 </RelativeLayout>

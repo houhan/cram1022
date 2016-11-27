@@ -73,7 +73,7 @@ public class AddBillboardActivity extends AppCompatActivity {
             //結束頁面
             AddBillboardActivity.this.finish();
             Intent intent = new Intent();
-            intent.setClass(AddBillboardActivity.this, BillboardActivity.class);
+            intent.setClass(AddBillboardActivity.this, Billboard_teacherActivity.class);
             AddBillboardActivity.this.startActivity(intent);
         }
     };

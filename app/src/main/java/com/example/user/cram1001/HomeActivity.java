@@ -26,7 +26,7 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
 import java.net.URLEncoder;
 
 public class HomeActivity extends AppCompatActivity {
-    private String UID,UUSER,UCLASS,UNAME;
+    private String UID,UUSER,UCLASS,UNAME,UStatus;
     private TextView UIDtest,CLASS,UUNAME;
     private static final String TAG = "MyFirebaseIIDService";
     private ProgressDialog mProgressDialog;
@@ -35,15 +35,12 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-
         Intent intent = this.getIntent();
-
 
         UNAME = intent.getStringExtra("UNAME");
         UUSER = intent.getStringExtra("UUSER");
         UCLASS = intent.getStringExtra("UClass");
-
-
+        UStatus = intent.getStringExtra("UStatus");
 
         //UNAME = intent.getStringExtra("UNAME");
 
@@ -102,10 +99,10 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(HomeActivity.this, CheckActivity.class);
-                HomeActivity.this.startActivity(intent);
+                intent.setClass(HomeActivity.this, CheckParentsActivity.class);
                 intent.putExtra("UNAME", UNAME);
                 intent.putExtra("UClass", UCLASS);
+                intent.putExtra("UStatus",UStatus);
                 startActivity(intent);
 
             }

@@ -11,6 +11,13 @@
     tools:context="com.example.user.cram1001.QkActivity"
     android:background="@drawable/background">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/shape">
+
+    </RelativeLayout>
+
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="300dp"
@@ -47,7 +54,8 @@
                 android:layout_toEndOf="@+id/textView3"
                 android:layout_column="8"
                 android:textColor="@color/common_google_signin_btn_text_dark_focused"
-                android:background="#b9dcff" />
+                android:background="#b9dcff"
+                android:textSize="24sp" />
             <!--
                         <EditText
                             android:layout_width="wrap_content"

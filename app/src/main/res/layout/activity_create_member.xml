@@ -11,6 +11,14 @@
     android:background="@drawable/background"
     android:padding="20dp">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/shape"
+        android:paddingRight="10dp">
+
+    </RelativeLayout>
+
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,7 +26,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/textView14" />
+        android:layout_toEndOf="@+id/textView14"
+        android:paddingRight="10dp" />
 
     <TextView
         android:text="帳號："
@@ -29,7 +38,8 @@
         android:layout_alignBaseline="@+id/createid"
         android:layout_alignBottom="@+id/createid"
         android:layout_alignParentStart="true"
-        android:textColor="?android:attr/panelColorBackground"/>
+        android:textColor="?android:attr/panelColorBackground"
+        android:paddingLeft="10dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -51,7 +61,8 @@
         android:layout_alignBaseline="@+id/createpwd"
         android:layout_alignBottom="@+id/createpwd"
         android:layout_alignParentStart="true"
-        android:textColor="?android:attr/panelColorBackground"/>
+        android:textColor="?android:attr/panelColorBackground"
+        android:paddingLeft="10dp"/>
 
     <TextView
         android:text="姓名："
@@ -62,7 +73,8 @@
         android:layout_alignBaseline="@+id/createname"
         android:layout_alignBottom="@+id/createname"
         android:layout_alignParentStart="true"
-        android:textColor="?android:attr/panelColorBackground"/>
+        android:textColor="?android:attr/panelColorBackground"
+        android:paddingLeft="10dp"/>
 
 
     <TextView
@@ -75,7 +87,8 @@
         android:layout_below="@+id/createname"
         android:layout_alignParentStart="true"
         android:layout_marginTop="13dp"
-        android:layout_toStartOf="@+id/createname" />
+        android:layout_toStartOf="@+id/createname"
+        android:paddingLeft="10dp"/>
 
     <Button
         android:layout_width="150dp"
@@ -95,7 +108,8 @@
         android:id="@+id/beaconminor"
         android:layout_alignTop="@+id/textView18"
         android:layout_above="@+id/test"
-        android:layout_toEndOf="@+id/textView18" />
+        android:layout_toEndOf="@+id/textView18"
+        android:paddingRight="10dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -104,7 +118,8 @@
         android:layout_alignBaseline="@+id/textView17"
         android:layout_alignBottom="@+id/textView17"
         android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/textView17" />
+        android:layout_toEndOf="@+id/textView17"
+        android:paddingRight="10dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -113,7 +128,8 @@
         android:layout_marginTop="13dp"
         android:layout_below="@+id/createpwd"
         android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/textView16" />
+        android:layout_toEndOf="@+id/textView16"
+        android:paddingRight="10dp" />
 
     <TextView
         android:text="Beacon Minor："
@@ -123,6 +139,7 @@
         android:id="@+id/textView18"
         android:textColor="?android:attr/panelColorBackground"
         android:layout_centerVertical="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:paddingLeft="10dp"/>
 
 </RelativeLayout>
